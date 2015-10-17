@@ -1,0 +1,19 @@
+{
+  "name": "tank-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/psalaets/tank-game.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/psalaets/tank-game/issues"
+  },
+  "homepage": "https://github.com/psalaets/tank-game#readme"
+}
