@@ -56,6 +56,8 @@ gulp.task('build-html', function() {
 gulp.task('build-sprites', function() {
   var globs = svgSourceFiles()
 
+  var sprites = [];
+
   return gulp.src(globs)
     .pipe(svgmin({
       plugins: [{
@@ -73,12 +75,18 @@ gulp.task('build-sprites', function() {
         var id = $element.attr('id');
         var markup = $element.toString();
 
-        this.push(new Vinyl({
-          path: id + '.svg',
-          contents: new Buffer(markup)
-        }))
-      }.bind(this));
+        sprites.push({
+          id: id,
+          markup: markup
+        });
+      });
 
+      done();
+    }, function(done) {
+      this.push(new Vinyl({
+        path: 'sprites.json',
+        contents: new Buffer(JSON.stringify(sprites))
+      }));
       done();
     }))
     .pipe(gulp.dest('build/svg'))
