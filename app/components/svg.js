@@ -6,9 +6,9 @@ var Tank = require('./tank');
 var Svg = React.createClass({
   render() {
     var tankProps = {
-      x: 200,
-      y: 100,
-      rotation: 45
+      x: 100,
+      y: 10,
+      rotation: 0
     };
 
     return (
