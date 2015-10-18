@@ -60,7 +60,13 @@ gulp.task('build-svg', function() {
   });
 
   return gulp.src(globs)
-    .pipe(svgmin())
+    .pipe(svgmin({
+      plugins: [{
+        collapseGroups: false
+      }, {
+        cleanupIDs: false
+      }]
+    }))
     .pipe(gulp.dest('build/svg'))
 });
 
