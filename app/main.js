@@ -8,8 +8,12 @@ var Svg = require('./components/svg');
 request
   .get('svg/sprites.json')
   .end(function(err, res) {
-    var spriteDefs = res.body;
+    if (err) {
+      console.log(err);
+      return;
+    }
 
+    var spriteDefs = res.body;
     ReactDOM.render(<Svg spriteDefs={spriteDefs}/>, document.getElementById('here'));
   });
 
