@@ -16,13 +16,16 @@
   "homepage": "https://github.com/psalaets/tank-game#readme",
   "dependencies": {
     "react": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "react-dom": "^0.14.0",
+    "xtend": "^4.0.0"
   },
   "devDependencies": {
     "babelify": "^6.3.0",
     "browser-sync": "^2.9.11",
     "browserify": "^11.2.0",
     "gulp": "^3.9.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.4.0"
   }
 }
