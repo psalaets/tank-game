@@ -73,11 +73,11 @@ gulp.task('build-sprites', function() {
       $('svg > g[id]').each(function(index, element) {
         var $element = $(element);
         var id = $element.attr('id');
-        var markup = $element.toString();
+        var innerHtml = $element.html();
 
         sprites.push({
           id: id,
-          markup: markup
+          markup: innerHtml
         });
       });
 
