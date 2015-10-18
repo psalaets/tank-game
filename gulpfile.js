@@ -8,6 +8,7 @@ var svgmin = require('gulp-svgmin');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var babelify = require('babelify');
+var eventStream = require('event-stream');
 
 var xtend = require('xtend');
 var through2 = require('through2');
@@ -17,14 +18,18 @@ var browserSync = require('browser-sync').create();
 
 
 gulp.task('build-js', function() {
-  return makeBundle();
+    return eventStream.merge(
+      makeBundle('app/main.js', 'bundle.js')
+    );
 });
 
 gulp.task('watch-js', function() {
-  return makeBundle(true);
+    return eventStream.merge(
+      makeBundle('app/main.js', 'bundle.js', true)
+    );
 });
 
-function makeBundle(watch) {
+function makeBundle(entryFile, outputFile, watch) {
   var browserifyArgs = xtend({debug: true}, watchify.args);
   var bundler = browserify(browserifyArgs);
 
@@ -33,7 +38,7 @@ function makeBundle(watch) {
     bundler.on('update', rebundle);
   }
 
-  bundler.add('app/main.js');
+  bundler.add(entryFile);
   bundler.transform(babelify)
 
   function rebundle() {
@@ -43,7 +48,7 @@ function makeBundle(watch) {
         console.log('browserify error: ' + event);
       })
       // convert regular node stream into gulp compatible stream
-      .pipe(source('bundle.js'))
+      .pipe(source(outputFile))
       .pipe(buffer())
       .pipe(gulp.dest('build'));
   }
@@ -52,7 +57,7 @@ function makeBundle(watch) {
 }
 
 gulp.task('build-html', function() {
-  return gulp.src('./app/index.html')
+  return gulp.src('./app/**/*.html')
     .pipe(gulp.dest('build'));
 });
 
