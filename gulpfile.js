@@ -53,11 +53,8 @@ gulp.task('build-html', function() {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('build-svg', function() {
-  var svgSourceFileNames = ['Tank-Clean-Plain.svg'];
-  var globs = svgSourceFileNames.map(function(filename) {
-    return 'assets/' + filename;
-  });
+gulp.task('build-sprites', function() {
+  var globs = svgSourceFiles()
 
   return gulp.src(globs)
     .pipe(svgmin({
@@ -87,7 +84,7 @@ gulp.task('build-svg', function() {
     .pipe(gulp.dest('build/svg'))
 });
 
-gulp.task('watch', ['watch-js', 'build-html'], function(cb) {
+gulp.task('watch', ['watch-js', 'build-html', 'build-sprites'], function(cb) {
   browserSync.init({
     server: {
       baseDir: './',
@@ -96,9 +93,22 @@ gulp.task('watch', ['watch-js', 'build-html'], function(cb) {
     open: false,
     ghostMode: false
   }, function() {
+    gulp.watch(svgSourceFiles(), ['build-sprites']);
     gulp.watch('app/**/*.html', ['build-html']);
     gulp.watch('build/**/*', browserSync.reload);
 
     cb();
   });
 });
+
+// returns glob array matching the "clean" svg files
+function svgSourceFiles() {
+  var svgSourceFileNames = [
+    'Tank-Clean-Plain.svg'
+  ];
+  var globs = svgSourceFileNames.map(function(filename) {
+    return 'assets/' + filename;
+  });
+
+  return globs;
+}
