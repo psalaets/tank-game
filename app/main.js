@@ -1,11 +1,13 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var a = <h1>hello world</h1>;
+var Tank = require('./components/tank');
 
-var header = document.querySelector('[data-message]')
-console.dir(header);
+var tankProps = {
+  x: 200,
+  y: 100,
+  rotation: 45
+};
 
-ReactDOM.render(a, header);
-
-console.log('test');
+var tankSvg = document.getElementById('tank')
+ReactDOM.render(<Tank {...tankProps}/>, tankSvg);
