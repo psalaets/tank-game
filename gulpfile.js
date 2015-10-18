@@ -1,19 +1,19 @@
 var gulp = require('gulp');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var Vinyl = require('vinyl');
+var filelog = require('gulp-filelog');
+var svgmin = require('gulp-svgmin');
+
 var browserify = require('browserify');
 var watchify = require('watchify');
 var babelify = require('babelify');
 
 var xtend = require('xtend');
-
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-
-var filelog = require('gulp-filelog');
+var through2 = require('through2');
+var cheerio = require('cheerio');
 
 var browserSync = require('browser-sync').create();
-
-var svgmin = require('gulp-svgmin');
-
 
 
 gulp.task('build-js', function() {
@@ -66,6 +66,23 @@ gulp.task('build-svg', function() {
       }, {
         cleanupIDs: false
       }]
+    }))
+    .pipe(through2.obj(function(file, encoding, done) {
+      var fileContents = file.contents.toString();
+      var $ = cheerio.load(fileContents);
+
+      $('svg > g[id]').each(function(index, element) {
+        var $element = $(element);
+        var id = $element.attr('id');
+        var markup = $element.toString();
+
+        this.push(new Vinyl({
+          path: id + '.svg',
+          contents: new Buffer(markup)
+        }))
+      }.bind(this));
+
+      done();
     }))
     .pipe(gulp.dest('build/svg'))
 });
