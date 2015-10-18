@@ -8,7 +8,13 @@ var xtend = require('xtend');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 
+var filelog = require('gulp-filelog');
+
 var browserSync = require('browser-sync').create();
+
+var svgmin = require('gulp-svgmin');
+
+
 
 gulp.task('build-js', function() {
   return makeBundle();
@@ -45,6 +51,17 @@ function makeBundle(watch) {
 gulp.task('build-html', function() {
   return gulp.src('./app/index.html')
     .pipe(gulp.dest('build'));
+});
+
+gulp.task('build-svg', function() {
+  var svgSourceFileNames = ['Tank-Clean-Plain.svg'];
+  var globs = svgSourceFileNames.map(function(filename) {
+    return 'assets/' + filename;
+  });
+
+  return gulp.src(globs)
+    .pipe(svgmin())
+    .pipe(gulp.dest('build/svg'))
 });
 
 gulp.task('watch', ['watch-js', 'build-html'], function(cb) {

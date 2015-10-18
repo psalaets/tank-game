@@ -24,6 +24,8 @@
     "browser-sync": "^2.9.11",
     "browserify": "^11.2.0",
     "gulp": "^3.9.0",
+    "gulp-filelog": "^0.4.1",
+    "gulp-svgmin": "^1.2.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.4.0"
