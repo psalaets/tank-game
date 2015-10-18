@@ -39,6 +39,9 @@ function makeBundle(watch) {
   function rebundle() {
     return bundler
       .bundle()
+      .on('error', function(event) {
+        console.log('browserify error: ' + event);
+      })
       // convert regular node stream into gulp compatible stream
       .pipe(source('bundle.js'))
       .pipe(buffer())
