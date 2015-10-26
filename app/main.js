@@ -14,6 +14,16 @@ request
     }
 
     var sprites = res.body;
-    ReactDOM.render(<GameBoard sprites={sprites}/>, document.getElementById('here'));
+    var tanks = [{
+      x: 100,
+      y: 10,
+      rotation: 0
+    }, {
+      x: 200,
+      y: 10,
+      rotation: 90
+    }]
+
+    ReactDOM.render(<GameBoard sprites={sprites} tanks={tanks}/>, document.getElementById('here'));
   });
 
