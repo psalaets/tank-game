@@ -13,7 +13,7 @@ request
       return;
     }
 
-    var spriteDefs = res.body;
-    ReactDOM.render(<GameBoard spriteDefs={spriteDefs}/>, document.getElementById('here'));
+    var sprites = res.body;
+    ReactDOM.render(<GameBoard sprites={sprites}/>, document.getElementById('here'));
   });
 

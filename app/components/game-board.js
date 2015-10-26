@@ -2,11 +2,11 @@ var React = require('react');
 
 var SpriteDefs = require('./sprite-defs');
 var Tank = require('./tank');
-var defs = require('./prop-types/defs');
+var spriteMetadata = require('./prop-types/sprite-metadata');
 
 var GameBoard = React.createClass({
   propTypes: {
-    spriteDefs: defs.isRequired
+    sprites: spriteMetadata.isRequired
   },
   render() {
     var tankProps = {
@@ -17,7 +17,7 @@ var GameBoard = React.createClass({
 
     return (
       <svg width="800" height="600">
-        <SpriteDefs defs={this.props.spriteDefs}/>
+        <SpriteDefs sprites={this.props.sprites}/>
         <Tank {...tankProps}/>
       </svg>
     );

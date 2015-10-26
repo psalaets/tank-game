@@ -1,14 +1,14 @@
 var React = require('react');
-var defs = require('./prop-types/defs');
+var spriteMetadata = require('./prop-types/sprite-metadata');
 
 var SpriteDefs = React.createClass({
   propTypes: {
-    defs: defs.isRequired
+    sprites: spriteMetadata.isRequired
   },
   render() {
-    var children = this.props.defs.map(function(def) {
+    var children = this.props.sprites.map(function(sprite) {
       return (
-        <g id={def.id} key={def.id} dangerouslySetInnerHTML={{__html: def.markup}}/>
+        <g id={sprite.id} key={sprite.id} dangerouslySetInnerHTML={{__html: sprite.markup}}/>
       );
     });
 
