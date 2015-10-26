@@ -4,7 +4,7 @@ var SpriteDefs = require('./sprite-defs');
 var Tank = require('./tank');
 var defs = require('./prop-types/defs');
 
-var Svg = React.createClass({
+var GameBoard = React.createClass({
   propTypes: {
     spriteDefs: defs.isRequired
   },
@@ -24,4 +24,4 @@ var Svg = React.createClass({
   }
 });
 
-module.exports = Svg;
+module.exports = GameBoard;

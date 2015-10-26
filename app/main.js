@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 
 var request = require('superagent');
 
-var Svg = require('./components/svg');
+var GameBoard = require('./components/game-board');
 
 request
   .get('svg/sprites.json')
@@ -14,6 +14,6 @@ request
     }
 
     var spriteDefs = res.body;
-    ReactDOM.render(<Svg spriteDefs={spriteDefs}/>, document.getElementById('here'));
+    ReactDOM.render(<GameBoard spriteDefs={spriteDefs}/>, document.getElementById('here'));
   });
 
