@@ -6,9 +6,9 @@
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    id="svg3495"
-   width="245.98621"
+   width="244.98831"
    version="1.1"
-   height="379.22742">
+   height="379.99927">
   <metadata
      id="metadata44">
     <rdf:RDF>
@@ -24,7 +24,7 @@
   <defs
      id="defs4" />
   <g
-     transform="translate(-171.42002,-41.314201)"
+     transform="matrix(0.99594325,0,0,1.0020604,-170.72461,-41.408853)"
      style="image-rendering:optimizeSpeed"
      id="tank">
     <g
@@ -163,6 +163,7 @@
          id="path4201" />
     </g>
     <g
+       transform="matrix(1.0000007,0,0,0.9999661,-1.7095411e-4,0.01090887)"
        id="tank-turrent">
       <path
          transform="translate(-3.8833872e-6,1.4468955e-6)"
