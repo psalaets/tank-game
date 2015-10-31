@@ -16,7 +16,7 @@ var Tank = React.createClass({
     return (
       <g {...props}>
          <use xlinkHref="#tank-body"/>
-         <use xlinkHref="#tank-turrent"/>
+         <use xlinkHref="#tank-turret"/>
       </g>
     );
   }
