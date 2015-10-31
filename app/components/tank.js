@@ -8,17 +8,21 @@ var Tank = React.createClass({
     rotation: React.PropTypes.number.isRequired
   },
   render() {
-    var {x, y, rotation} = this.props;
-    var props = {
-      transform: `translate(${x} ${y}) rotate(${rotation})`
-    };
+    var attributes = this.generateAttributes(this.props);
 
     return (
-      <g {...props}>
+      <g {...attributes}>
          <use xlinkHref="#tank-body"/>
          <use xlinkHref="#tank-turret"/>
       </g>
     );
+  },
+  generateAttributes: function(props) {
+    var {x, y, rotation} = props;
+
+    return {
+      transform: `translate(${x} ${y}) rotate(${rotation})`
+    };
   }
 });
 
