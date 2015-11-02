@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register ./test/**/*.spec.js"
+    "test": "mocha --compilers js:babel-core/register --recursive"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,7 @@
     "gulp-filelog": "^0.4.1",
     "gulp-svgmin": "^1.2.0",
     "mocha": "^2.3.3",
+    "react-addons-test-utils": "^0.14.1",
     "through2": "^2.0.0",
     "vinyl": "^1.0.0",
     "vinyl-buffer": "^1.0.0",
