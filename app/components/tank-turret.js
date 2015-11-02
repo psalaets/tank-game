@@ -1,5 +1,7 @@
 var React = require('react');
 
+var DrawOffset = require('./draw-offset');
+
 var Turret = React.createClass({
   propTypes: {
     rotation: React.PropTypes.number.isRequired
@@ -7,10 +9,15 @@ var Turret = React.createClass({
   render() {
     var attributes = this.generateAttributes(this.props);
 
+    var offsets = {
+      x: 24,
+      y: -25
+    };
+
     return (
-      <g transform="translate(24 -25)">
+      <DrawOffset {...offsets}>
         <use xlinkHref="#tank-turret" {...attributes}/>
-      </g>
+      </DrawOffset>
     );
   },
   generateAttributes(props) {

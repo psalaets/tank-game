@@ -2,6 +2,7 @@ var React = require('react');
 
 var Turret = require('./tank-turret');
 var Body = require('./tank-body');
+var svg = require('./helpers/svg');
 
 var Tank = React.createClass({
   propTypes: {
@@ -27,8 +28,12 @@ var Tank = React.createClass({
     var rx = 134;
     var ry = 176;
 
+    var transformParts = {
+      x, y, rotation, rx, ry
+    };
+
     return {
-      transform: `translate(${x} ${y}) rotate(${rotation} ${rx} ${ry})`
+      transform: svg.transform(transformParts)
     };
   }
 });
