@@ -19,7 +19,6 @@ var Tank = React.createClass({
       <g {...attributes}>
         <Body/>
         <Turret rotation={turretRotation}/>
-        <circle cx="134" cy="176" r="5"/>
       </g>
     );
   },
