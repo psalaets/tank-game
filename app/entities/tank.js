@@ -39,13 +39,13 @@ Tank.prototype = {
   * @param {Number} amount - Value in [-1, 1]
   */
   leftThrottle: function(amount) {
-    this.leftTread.engineForce = amount * treadForce;
+    this.leftTread.engineForce = amount * this.treadForce;
   },
   /**
   * @param {Number} amount - Value in [-1, 1]
   */
   rightThrottle: function(amount) {
-    this.rightTread.engineForce = amount * treadForce;
+    this.rightTread.engineForce = amount * this.treadForce;
   }
 };
 
