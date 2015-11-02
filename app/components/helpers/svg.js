@@ -6,8 +6,10 @@ module.exports = {
  * Generate the value of an svg transform attribute for translating, rotating,
  * and scaling.
  *
- * @param {Object} parts - Object containing any of these groups of
- *        properties: (x, y), (rotation, rx, ry), (scaleX, scaleY).
+ * @param {Object} parts - Object containing parts of the transform.
+ *        - To translate, include: x, y
+ *        - To rotate,    include: rotation, rx, ry
+ *        - To scale,     include: scaleX, scaleY
  */
 function transform(parts) {
   var value = '';
