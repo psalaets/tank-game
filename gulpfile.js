@@ -68,6 +68,7 @@ gulp.task('build-sprites', function() {
 
   return gulp.src(globs)
     .pipe(svgmin({
+      // https://github.com/svg/svgo/tree/master/plugins
       plugins: [{
         collapseGroups: false
       }, {
