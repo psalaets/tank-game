@@ -10,8 +10,7 @@ module.exports = {
  *        properties: (x, y), (rotation, rx, ry), (scaleX, scaleY).
  */
 function transform(transforms) {
-  var {x, y, rotation, rx, ry, scaleX, scaleY}
-
+  var {x, y, rotation, rx, ry, scaleX, scaleY} = transforms;
   var value = '';
 
   if ('x' in transforms) {
