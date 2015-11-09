@@ -19,7 +19,7 @@ var GameBoard = React.createClass({
     });
 
     return (
-      <svg width="800" height="600">
+      <svg width="100%" transform="scale(0.4)">
         <SpriteDefs sprites={this.props.sprites}/>
         {tanks}
       </svg>

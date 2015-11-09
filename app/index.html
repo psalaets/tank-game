@@ -2,18 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Document</title>
   <style>
     svg {
       outline: 1px red solid;
     }
+
+    [data-tread-controls] {
+      display: flex;
+      flex-direction: row;
+    }
+
+    [data-tread-control] {
+      height: 300px;
+      width: 200px;
+      outline: 1px blue solid;
+      user-select: none;
+      overflow: hidden;
+    }
   </style>
 </head>
 <body>
 
-  <h1>Tank</h1>
-
-  <div id="here"></div>
+  <div id="main"></div>
+  <div id="controls"></div>
 
   <script src="bundle.js"></script>
 </body>

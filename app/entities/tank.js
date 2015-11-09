@@ -2,13 +2,14 @@ var p2 = require('@psalaets/p2');
 
 module.exports = Tank;
 
+var maxThrottleForce = 1;
+var noThrottleBrakeForce = 2;
+
 function Tank(x, y) {
   this.body = createBody(x, y);
   this.vehicle = createVehicle(this.body);
-  this.leftTread = addTread(this.vehicle, -10, 0);
-  this.rightTread = addTread(this.vehicle, 10, 0);
-
-  this.treadForce = 5;
+  this.leftTread = addTread(this.vehicle, -1, 0);
+  this.rightTread = addTread(this.vehicle, 1, 0);
 }
 
 function createBody(x, y) {
@@ -29,9 +30,12 @@ function createVehicle(chassisBody) {
 }
 
 function addTread(vehicle, localX, localY) {
-  return vehicle.addWheel({
+  var tread = vehicle.addWheel({
     localPosition: [localX, localY]
   });
+
+  tread.setSideFriction(5);
+  return tread;
 }
 
 Tank.prototype = {
@@ -39,13 +43,23 @@ Tank.prototype = {
   * @param {Number} amount - Value in [-1, 1]
   */
   leftThrottle: function(amount) {
-    this.leftTread.engineForce = amount * this.treadForce;
+    if (amount == 0) {
+      this.leftTread.setBrakeForce(noThrottleBrakeForce);
+    } else {
+      this.leftTread.setBrakeForce(0);
+      this.leftTread.engineForce = amount * maxThrottleForce;
+    }
   },
   /**
   * @param {Number} amount - Value in [-1, 1]
   */
   rightThrottle: function(amount) {
-    this.rightTread.engineForce = amount * this.treadForce;
+    if (amount == 0) {
+      this.rightTread.setBrakeForce(noThrottleBrakeForce);
+    } else {
+      this.rightTread.setBrakeForce(0);
+      this.rightTread.engineForce = amount * maxThrottleForce;
+    }
   }
 };
 
