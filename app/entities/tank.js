@@ -47,8 +47,9 @@ Tank.prototype = {
       this.leftTread.setBrakeForce(noThrottleBrakeForce);
     } else {
       this.leftTread.setBrakeForce(0);
-      this.leftTread.engineForce = amount * maxThrottleForce;
     }
+
+    this.leftTread.engineForce = amount * maxThrottleForce;
   },
   /**
   * @param {Number} amount - Value in [-1, 1]
@@ -58,8 +59,9 @@ Tank.prototype = {
       this.rightTread.setBrakeForce(noThrottleBrakeForce);
     } else {
       this.rightTread.setBrakeForce(0);
-      this.rightTread.engineForce = amount * maxThrottleForce;
     }
+
+    this.rightTread.engineForce = amount * maxThrottleForce;
   }
 };
 
