@@ -6,13 +6,16 @@ var maxThrottleForce = 30;
 var noThrottleBrakeForce = 60;
 
 function Tank(x, y) {
-  this.body = createBody(x, y);
+  var width = 230;
+  var height = 300;
+
+  this.body = createBody(x, y, width, height);
   this.vehicle = createVehicle(this.body);
-  this.leftTread = addTread(this.vehicle, -115, 0);
-  this.rightTread = addTread(this.vehicle, 115, 0);
+  this.leftTread = addTread(this.vehicle, -width / 2, 0);
+  this.rightTread = addTread(this.vehicle, width / 2, 0);
 }
 
-function createBody(x, y) {
+function createBody(x, y, width, height) {
   var chassisBody = new p2.Body({
     mass: 1,
     position: [x, y]
@@ -22,8 +25,8 @@ function createBody(x, y) {
   chassisBody.damping = 0.5;
 
   chassisBody.addShape(new p2.Box({
-    width: 230,
-    height: 300
+    width: width,
+    height: height
   }));
   return chassisBody;
 }
