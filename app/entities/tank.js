@@ -2,14 +2,14 @@ var p2 = require('@psalaets/p2');
 
 module.exports = Tank;
 
-var maxThrottleForce = 1;
-var noThrottleBrakeForce = 2;
+var maxThrottleForce = 30;
+var noThrottleBrakeForce = 60;
 
 function Tank(x, y) {
   this.body = createBody(x, y);
   this.vehicle = createVehicle(this.body);
-  this.leftTread = addTread(this.vehicle, -1, 0);
-  this.rightTread = addTread(this.vehicle, 1, 0);
+  this.leftTread = addTread(this.vehicle, -115, 0);
+  this.rightTread = addTread(this.vehicle, 115, 0);
 }
 
 function createBody(x, y) {
@@ -18,9 +18,12 @@ function createBody(x, y) {
     position: [x, y]
   });
 
+  chassisBody.angularDamping = 0.5;
+  chassisBody.damping = 0.5;
+
   chassisBody.addShape(new p2.Box({
-    width: 20,
-    height: 20
+    width: 230,
+    height: 300
   }));
   return chassisBody;
 }
@@ -34,7 +37,7 @@ function addTread(vehicle, localX, localY) {
     localPosition: [localX, localY]
   });
 
-  tread.setSideFriction(5);
+  tread.setSideFriction(50);
   return tread;
 }
 

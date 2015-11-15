@@ -5,7 +5,13 @@ var p2 = require('@psalaets/p2');
 
 var request = require('superagent');
 
+var Game = require('./game');
 var TreadControls = require('./components/tread-controls');
+
+// dom elements
+
+var main = document.getElementById('main');
+var controls = document.getElementById('controls');
 
 // game stuff
 
@@ -13,23 +19,22 @@ var GameBoard = require('./components/game-board');
 
 var Tank = require('./entities/tank');
 
-var tank = new Tank(100, 100);
+var tank = new Tank(0, 0);
 var turretRotation = 0;
 
-// dom elements
-
-var main = document.getElementById('main');
-var controls = document.getElementById('controls');
-
 function leftThrottle(power) {
+  // negate power because phyiscs is y-up but svg is y-down
+  power = -power;
+
   tank.leftThrottle(power);
 }
 
 function rightThrottle(power) {
+  // negate power because phyiscs is y-up but svg is y-down
+  power = -power;
+
   tank.rightThrottle(power);
 }
-
-// ???
 
 var sprites;
 
@@ -46,8 +51,19 @@ request
     requestAnimationFrame(updateLoop);
   });
 
-function renderTank(tank) {
-  var tanks = [tank].map(function(tank) {
+var game = new Game();
+game.addTank(tank);
+
+function updateLoop(nowMillis) {
+  requestAnimationFrame(updateLoop);
+
+  game.update(nowMillis);
+
+  render(game.getState());
+}
+
+function render(state) {
+  var tanks = state.tanks.map(function(tank) {
     var {x, y, rotation} = tank;
     return {
       x,
@@ -57,30 +73,6 @@ function renderTank(tank) {
     }
   });
 
-  // console.dir(tanks)
-
   ReactDOM.render(<GameBoard sprites={sprites} tanks={tanks}/>, main);
   ReactDOM.render(<TreadControls onLeftChange={leftThrottle} onRightChange={rightThrottle}/>, controls);
-}
-
-var lastTimeSeconds;
-var nowSeconds;
-
-var world = new p2.World({
-  gravity: [0, 0]
-});
-
-world.addBody(tank.body)
-tank.vehicle.addToWorld(world)
-
-function updateLoop(nowMillis) {
-  requestAnimationFrame(updateLoop);
-
-  nowSeconds = nowMillis / 1000;
-  lastTimeSeconds = lastTimeSeconds || nowSeconds;
-
-  var deltaSeconds = nowSeconds - lastTimeSeconds;
-  world.step(1 / 60, deltaSeconds, 10);
-
-  renderTank(tank);
 }
