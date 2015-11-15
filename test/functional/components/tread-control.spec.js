@@ -7,18 +7,31 @@ var assert = require('assert');
 var TreadControl = require('../../../app/components/tread-control');
 
 describe('TreadControl component', function() {
-  var testArea;
+  var testArea, styles;
 
   beforeEach(function() {
     testArea = document.createElement('div');
     testArea.id = 'test-area';
 
+    styles = document.createElement('style');
+    styles.innerHTML = `
+      [data-tread-control] {
+        position: fixed;
+        top: 100px;
+        height: 200px;
+      }
+    `;
+
+    document.body.appendChild(styles);
     document.body.appendChild(testArea);
   });
 
   afterEach(function() {
-    document.body.removeChild(testArea)
+    document.body.removeChild(testArea);
+    document.body.removeChild(styles);
+
     testArea = null;
+    styles = null;
   });
 
   describe('on touchstart event', function() {
@@ -26,11 +39,9 @@ describe('TreadControl component', function() {
       it('sets power to 1', function() {
         var onChange = powerChangeRecorder();
         var componentInstance = ReactDOM.render(<TreadControl onChange={onChange}/>, testArea);
+        var domNode = componentInstance.refs.self;
 
-        var rangeNode = componentInstance.refs.range;
-        positionAt(rangeNode, 100);
-
-        TestUtils.Simulate.touchStart(rangeNode, touchEvent(100));
+        TestUtils.Simulate.touchStart(domNode, touchEvent(100));
 
         assert.deepEqual(onChange.powers, [1]);
       });
@@ -40,11 +51,9 @@ describe('TreadControl component', function() {
       it('sets power to 0', function() {
         var onChange = powerChangeRecorder();
         var componentInstance = ReactDOM.render(<TreadControl onChange={onChange}/>, testArea);
+        var domNode = componentInstance.refs.self;
 
-        var rangeNode = componentInstance.refs.range;
-        positionAt(rangeNode, 100);
-
-        TestUtils.Simulate.touchStart(rangeNode, touchEvent(200));
+        TestUtils.Simulate.touchStart(domNode, touchEvent(200));
 
         assert.deepEqual(onChange.powers, [0]);
       });
@@ -54,11 +63,9 @@ describe('TreadControl component', function() {
       it('sets power to -1', function() {
         var onChange = powerChangeRecorder();
         var componentInstance = ReactDOM.render(<TreadControl onChange={onChange}/>, testArea);
+        var domNode = componentInstance.refs.self;
 
-        var rangeNode = componentInstance.refs.range;
-        positionAt(rangeNode, 100);
-
-        TestUtils.Simulate.touchStart(rangeNode, touchEvent(300));
+        TestUtils.Simulate.touchStart(domNode, touchEvent(300));
 
         assert.deepEqual(onChange.powers, [-1]);
       });
@@ -70,11 +77,9 @@ describe('TreadControl component', function() {
       it('sets power to 1', function() {
         var onChange = powerChangeRecorder();
         var componentInstance = ReactDOM.render(<TreadControl onChange={onChange}/>, testArea);
+        var domNode = componentInstance.refs.self;
 
-        var rangeNode = componentInstance.refs.range;
-        positionAt(rangeNode, 100);
-
-        TestUtils.Simulate.touchMove(rangeNode, touchEvent(0));
+        TestUtils.Simulate.touchMove(domNode, touchEvent(0));
 
         assert.deepEqual(onChange.powers, [1]);
       });
@@ -84,11 +89,9 @@ describe('TreadControl component', function() {
       it('sets power to a positive number', function() {
         var onChange = powerChangeRecorder();
         var componentInstance = ReactDOM.render(<TreadControl onChange={onChange}/>, testArea);
+        var domNode = componentInstance.refs.self;
 
-        var rangeNode = componentInstance.refs.range;
-        positionAt(rangeNode, 100);
-
-        TestUtils.Simulate.touchMove(rangeNode, touchEvent(150));
+        TestUtils.Simulate.touchMove(domNode, touchEvent(150));
 
         assert.deepEqual(onChange.powers, [0.5]);
       });
@@ -98,11 +101,9 @@ describe('TreadControl component', function() {
       it('sets power to a negative number', function() {
         var onChange = powerChangeRecorder();
         var componentInstance = ReactDOM.render(<TreadControl onChange={onChange}/>, testArea);
+        var domNode = componentInstance.refs.self;
 
-        var rangeNode = componentInstance.refs.range;
-        positionAt(rangeNode, 100);
-
-        TestUtils.Simulate.touchMove(rangeNode, touchEvent(250));
+        TestUtils.Simulate.touchMove(domNode, touchEvent(250));
 
         assert.deepEqual(onChange.powers, [-0.5]);
       });
@@ -112,11 +113,9 @@ describe('TreadControl component', function() {
       it('sets power to -1', function() {
         var onChange = powerChangeRecorder();
         var componentInstance = ReactDOM.render(<TreadControl onChange={onChange}/>, testArea);
+        var domNode = componentInstance.refs.self;
 
-        var rangeNode = componentInstance.refs.range;
-        positionAt(rangeNode, 100);
-
-        TestUtils.Simulate.touchMove(rangeNode, touchEvent(500));
+        TestUtils.Simulate.touchMove(domNode, touchEvent(500));
 
         assert.deepEqual(onChange.powers, [-1]);
       });
@@ -126,13 +125,11 @@ describe('TreadControl component', function() {
       it('changes power multiple times', function() {
         var onChange = powerChangeRecorder();
         var componentInstance = ReactDOM.render(<TreadControl onChange={onChange}/>, testArea);
+        var domNode = componentInstance.refs.self;
 
-        var rangeNode = componentInstance.refs.range;
-        positionAt(rangeNode, 100);
-
-        TestUtils.Simulate.touchMove(rangeNode, touchEvent(100));
-        TestUtils.Simulate.touchMove(rangeNode, touchEvent(200));
-        TestUtils.Simulate.touchMove(rangeNode, touchEvent(300));
+        TestUtils.Simulate.touchMove(domNode, touchEvent(100));
+        TestUtils.Simulate.touchMove(domNode, touchEvent(200));
+        TestUtils.Simulate.touchMove(domNode, touchEvent(300));
 
         assert.deepEqual(onChange.powers, [1, 0, -1]);
       });
@@ -143,11 +140,9 @@ describe('TreadControl component', function() {
     it('changes power to zero', function() {
       var onChange = powerChangeRecorder();
       var componentInstance = ReactDOM.render(<TreadControl onChange={onChange}/>, testArea);
+      var domNode = componentInstance.refs.self;
 
-      var rangeNode = componentInstance.refs.range;
-      positionAt(rangeNode, 100);
-
-      TestUtils.Simulate.touchEnd(rangeNode);
+      TestUtils.Simulate.touchEnd(domNode);
 
       assert.deepEqual(onChange.powers, [0]);
     });
@@ -158,14 +153,6 @@ function touchEvent(clientY) {
   return {
     targetTouches: [{clientY}]
   };
-}
-
-function positionAt(node, top) {
-  var height = 200;
-
-  node.style.position = 'fixed';
-  node.style.height   = height + 'px';
-  node.style.top      = top + 'px';
 }
 
 function powerChangeRecorder() {

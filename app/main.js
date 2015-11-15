@@ -29,8 +29,6 @@ function rightThrottle(power) {
   tank.rightThrottle(power);
 }
 
-ReactDOM.render(<TreadControls onLeftChange={leftThrottle} onRightChange={rightThrottle}/>, controls);
-
 // ???
 
 var sprites;
@@ -62,6 +60,7 @@ function renderTank(tank) {
   // console.dir(tanks)
 
   ReactDOM.render(<GameBoard sprites={sprites} tanks={tanks}/>, main);
+  ReactDOM.render(<TreadControls onLeftChange={leftThrottle} onRightChange={rightThrottle}/>, controls);
 }
 
 var lastTimeSeconds;
@@ -75,14 +74,7 @@ world.addBody(tank.body)
 tank.vehicle.addToWorld(world)
 
 function updateLoop(nowMillis) {
-  // console.dir(arguments)
-
   requestAnimationFrame(updateLoop);
-
-
-  // tank.leftThrottle(-1);
-  // tank.rightThrottle(1);
-
 
   nowSeconds = nowMillis / 1000;
   lastTimeSeconds = lastTimeSeconds || nowSeconds;

@@ -9,6 +9,18 @@ var TreadControl = React.createClass({
       power: 0
     };
   },
+  componentDidMount() {
+    var rect = this.refs.self.getBoundingClientRect();
+    this._rect = {
+      top: rect.top,
+      left: rect.left,
+      width: rect.width,
+      height: rect.height
+    };
+  },
+  componentWillUnmount() {
+    this._rect = null;
+  },
   render() {
     var touchHandlers = {
       onTouchStart: this.handleTouchStart,
@@ -17,19 +29,16 @@ var TreadControl = React.createClass({
     };
 
     return (
-      <div data-tread-control ref="range" {...touchHandlers}>
+      <div data-tread-control ref="self" {...touchHandlers}>
         {this.state.power}
       </div>
     );
   },
   getHeight() {
-    return this.getBoundingClientRect().height;
+    return this._rect.height;
   },
   getTop() {
-    return this.getBoundingClientRect().top;
-  },
-  getBoundingClientRect() {
-    return this.refs.range.getBoundingClientRect();
+    return this._rect.top;
   },
   handleTouchStart(event) {
     var power = this.calculatePower(event.targetTouches[0]);
