@@ -63,7 +63,7 @@ gulp.task('build-html', function() {
 });
 
 gulp.task('build-sprites', function() {
-  var globs = svgSourceFiles()
+  var globs = svgSourceFiles();
 
   var sprites = [];
 
@@ -99,7 +99,7 @@ gulp.task('build-sprites', function() {
       }));
       done();
     }))
-    .pipe(gulp.dest('build/svg'))
+    .pipe(gulp.dest('build/svg'));
 });
 
 gulp.task('watch', ['watch-js', 'build-html', 'build-sprites'], function(cb) {

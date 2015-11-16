@@ -54,8 +54,8 @@ request
 var game = new Game();
 game.addTank(tank);
 
-var tank2 = new Tank(750, 150)
-game.addTank(tank2)
+var tank2 = new Tank(750, 150);
+game.addTank(tank2);
 
 function updateLoop(nowMillis) {
   requestAnimationFrame(updateLoop);
@@ -73,7 +73,7 @@ function render(state) {
       y,
       rotation,
       turretRotation: turretRotation
-    }
+    };
   });
 
   ReactDOM.render(<GameBoard sprites={sprites} tanks={tanks}/>, main);
