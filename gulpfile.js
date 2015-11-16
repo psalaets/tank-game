@@ -39,7 +39,8 @@ function makeBundle(entryFile, outputFile, watch) {
   }
 
   bundler.add(entryFile);
-  bundler.transform(babelify)
+  // see .babelrc for babel config
+  bundler.transform(babelify);
 
   function rebundle() {
     return bundler
