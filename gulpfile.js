@@ -16,7 +16,6 @@ var cheerio = require('cheerio');
 
 var browserSync = require('browser-sync').create();
 
-
 gulp.task('build-js', function() {
     return eventStream.merge(
       makeBundle('app/main.js', 'bundle.js')
@@ -63,11 +62,9 @@ gulp.task('build-html', function() {
 });
 
 gulp.task('build-sprites', function() {
-  var globs = svgSourceFiles();
-
   var sprites = [];
 
-  return gulp.src(globs)
+  return gulp.src(svgSourceFiles())
     .pipe(svgmin({
       // https://github.com/svg/svgo/tree/master/plugins
       plugins: [{
