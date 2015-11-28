@@ -16,16 +16,25 @@ var cheerio = require('cheerio');
 
 var browserSync = require('browser-sync').create();
 
+// for every page name, foo, in here:
+//   - build uses foo-entry.js to make foo-bundle.js
+//   - foo.html has a <script> that loads foo-bundle.js
+var pages = ['main'];
+
 gulp.task('build-js', function() {
-    return eventStream.merge(
-      makeBundle('app/main.js', 'bundle.js')
-    );
+  var bundles = pages.map(function(page) {
+    return makeBundle('app/' + page + '-entry.js', page + '-bundle.js');
+  });
+
+  return eventStream.merge.apply(eventStream, bundles);
 });
 
 gulp.task('watch-js', function() {
-    return eventStream.merge(
-      makeBundle('app/main.js', 'bundle.js', true)
-    );
+  var bundles = pages.map(function(page) {
+    return makeBundle('app/' + page + '-entry.js', page + '-bundle.js', true);
+  });
+
+  return eventStream.merge.apply(eventStream, bundles);
 });
 
 function makeBundle(entryFile, outputFile, watch) {
