@@ -63,8 +63,9 @@ function updateLoop(nowMillis) {
 
 function render(state) {
   var tanks = state.tanks.map(function(tank) {
-    var {x, y, rotation} = tank;
+    var {x, y, rotation, id} = tank;
     return {
+      id,
       x,
       y,
       rotation,

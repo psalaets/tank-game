@@ -14,7 +14,7 @@ var GameBoard = React.createClass({
   render() {
     var tanks = this.props.tanks.map(function(tankProps) {
       return (
-        <Tank {...tankProps}/>
+        <Tank key={tankProps.id} {...tankProps}/>
       );
     });
 

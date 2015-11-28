@@ -12,12 +12,15 @@ function Game() {
   });
 
   this.tanks = [];
+
+  this.nextTankId = 0;
 }
 
 Game.prototype = {
   // add tank to game
   addTank(x, y) {
-    var tank = new Tank(x, y);
+    var id = this.nextTankId++;
+    var tank = new Tank(id, x, y);
 
     this.tanks.push(tank);
 

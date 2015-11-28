@@ -5,9 +5,11 @@ module.exports = Tank;
 var maxThrottleForce = 30;
 var noThrottleBrakeForce = 60;
 
-function Tank(x, y) {
+function Tank(id, x, y) {
   var width = 230;
   var height = 300;
+
+  this.id = id;
 
   this.body = createBody(x, y, width, height);
   this.vehicle = createVehicle(this.body);
