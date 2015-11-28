@@ -17,9 +17,6 @@ var controls = document.getElementById('controls');
 
 var GameBoard = require('./components/game-board');
 
-var Tank = require('./entities/tank');
-
-var tank = new Tank(150, 0);
 var turretRotation = 0;
 
 function leftThrottle(power) {
@@ -52,10 +49,9 @@ request
   });
 
 var game = new Game();
-game.addTank(tank);
 
-var tank2 = new Tank(750, 150);
-game.addTank(tank2);
+var tank = game.addTank(150, 0);
+var tank2 = game.addTank(750, 150);
 
 function updateLoop(nowMillis) {
   requestAnimationFrame(updateLoop);

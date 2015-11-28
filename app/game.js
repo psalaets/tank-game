@@ -1,5 +1,7 @@
 var p2 = require('@psalaets/p2');
 
+var Tank = require('./entities/tank');
+
 module.exports = Game;
 
 function Game() {
@@ -14,11 +16,15 @@ function Game() {
 
 Game.prototype = {
   // add tank to game
-  addTank(tank) {
+  addTank(x, y) {
+    var tank = new Tank(x, y);
+
     this.tanks.push(tank);
 
     this.world.addBody(tank.body);
     tank.vehicle.addToWorld(this.world);
+
+    return tank;
   },
   // update game
   update(nowMillis) {
