@@ -133,6 +133,19 @@ describe('TreadControl component', function() {
 
         assert.deepEqual(onChange.powers, [1, 0, -1]);
       });
+
+      it('does not call onChange consecutive times with same power', function() {
+        var onChange = powerChangeRecorder();
+        var componentInstance = ReactDOM.render(<TreadControl onChange={onChange}/>, testArea);
+        var domNode = componentInstance.refs.self;
+
+        TestUtils.Simulate.touchMove(domNode, touchEvent(0));
+        TestUtils.Simulate.touchMove(domNode, touchEvent(1));
+        TestUtils.Simulate.touchMove(domNode, touchEvent(2));
+
+        // this used to result in [1, 1, 1]
+        assert.deepEqual(onChange.powers, [1]);
+      });
     });
   });
 

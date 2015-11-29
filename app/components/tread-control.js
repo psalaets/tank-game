@@ -6,7 +6,7 @@ var TreadControl = React.createClass({
   },
   getInitialState() {
     return {
-      power: 0
+      power: null
     };
   },
   componentDidMount() {
@@ -75,11 +75,13 @@ var TreadControl = React.createClass({
     return power;
   },
   updatePower(power) {
-    this.setState({
-      power
-    });
+    if (power !== this.state.power) {
+      this.setState({
+        power
+      });
 
-    this.props.onChange(power);
+      this.props.onChange(power);
+    }
   }
 });
 
