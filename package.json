@@ -36,6 +36,7 @@
     "cheerio": "^0.19.0",
     "event-stream": "^3.3.2",
     "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
     "gulp-filelog": "^0.4.1",
     "gulp-sass": "^2.1.0",
     "gulp-svgmin": "^1.2.0",

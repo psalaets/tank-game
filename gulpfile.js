@@ -5,6 +5,7 @@ var Vinyl = require('vinyl');
 var filelog = require('gulp-filelog');
 var svgmin = require('gulp-svgmin');
 var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
 
 var browserify = require('browserify');
 var watchify = require('watchify');
@@ -69,6 +70,13 @@ function makeBundle(entryFile, outputFile, watch) {
 gulp.task('build-styles', function() {
   return gulp.src('./app/core/manifest.scss')
     .pipe(sass().on('error', sass.logError))
+    .pipe(autoprefixer({
+      // https://github.com/postcss/autoprefixer#options
+      browsers: [
+        'last 2 versions',
+        'ie >= 10'
+      ]
+    }))
     .pipe(gulp.dest('build'))
 
 });
