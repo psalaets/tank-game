@@ -5,14 +5,11 @@ var Tank = require('./entities/tank');
 module.exports = GameLogic;
 
 function GameLogic() {
-  this.lastUpdateSeconds = 0;
-
   this.world = new p2.World({
     gravity: [0, 0]
   });
 
   this.tanks = [];
-
   this.nextTankId = 0;
 }
 
@@ -40,12 +37,8 @@ GameLogic.prototype = {
     }
   },
   // update game
-  update(nowMillis) {
-    var nowSeconds = nowMillis / 1000;
-
-    this.world.step(1 / 60, nowSeconds - this.lastUpdateSeconds);
-
-    this.lastUpdateSeconds = nowSeconds;
+  update(deltaSeconds) {
+    this.world.step(1 / 30, deltaSeconds);
   },
   // state of everything in the game
   getState() {
