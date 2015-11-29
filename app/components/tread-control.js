@@ -41,19 +41,19 @@ var TreadControl = React.createClass({
     return this._rect.top;
   },
   handleTouchStart(event) {
-    var localY = this.yOnThisControl(event.targetTouches[0]);
+    var localY = this.localY(event.targetTouches[0]);
     var power = this.calculatePower(localY, this.getHeight());
     this.updatePower(power);
   },
   handleTouchMove(event) {
-    var localY = this.yOnThisControl(event.targetTouches[0]);
+    var localY = this.localY(event.targetTouches[0]);
     var power = this.calculatePower(localY, this.getHeight());
     this.updatePower(power);
   },
   handleTouchEnd(event) {
     this.updatePower(0);
   },
-  yOnThisControl(touch) {
+  localY(touch) {
     // touch's distance from viewport top minus div's distance from viewport top
     // is touch's y location on div
     return touch.clientY - this.getTop();
