@@ -2,9 +2,9 @@ var p2 = require('@psalaets/p2');
 
 var Tank = require('./entities/tank');
 
-module.exports = Game;
+module.exports = GameLogic;
 
-function Game() {
+function GameLogic() {
   this.lastUpdateSeconds = 0;
 
   this.world = new p2.World({
@@ -16,7 +16,7 @@ function Game() {
   this.nextTankId = 0;
 }
 
-Game.prototype = {
+GameLogic.prototype = {
   // add tank to game
   addTank(x, y) {
     var id = this.nextTankId++;

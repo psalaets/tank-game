@@ -5,7 +5,7 @@ var p2 = require('@psalaets/p2');
 
 var request = require('superagent');
 
-var Game = require('./game');
+var GameLogic = require('./game-logic');
 var TreadControls = require('./components/tread-controls');
 
 // dom elements
@@ -48,7 +48,7 @@ request
     requestAnimationFrame(updateLoop);
   });
 
-var game = new Game();
+var game = new GameLogic();
 
 var tank = game.addTank(150, 0);
 var tank2 = game.addTank(750, 150);
