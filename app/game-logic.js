@@ -20,9 +20,7 @@ GameLogic.prototype = {
     var tank = new Tank(id, x, y);
 
     this.tanks.push(tank);
-
-    this.world.addBody(tank.body);
-    tank.vehicle.addToWorld(this.world);
+    tank.addToWorld(this.world);
 
     return tank;
   },
@@ -33,6 +31,9 @@ GameLogic.prototype = {
     var index = this.tanks.findIndex(tank => tank.id === id);
 
     if (index != -1) {
+      var tank = this.getTank(id);
+      tank.removeFromWorld(this.world);
+
       this.tanks.splice(index, 1);
     }
   },

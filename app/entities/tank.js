@@ -70,6 +70,24 @@ Tank.prototype = {
     }
 
     this.rightTread.engineForce = amount * maxThrottleForce;
+  },
+  /**
+  * Helper to add tank to p2.
+  *
+  * @param {p2.World} world
+  */
+  addToWorld: function(world) {
+    world.addBody(this.body);
+    this.vehicle.addToWorld(world);
+  },
+  /**
+  * Helper to remove tank from p2.
+  *
+  * @param {p2.World} world
+  */
+  removeFromWorld: function(world) {
+    world.removeBody(this.body);
+    this.vehicle.removeFromWorld(world);
   }
 };
 
