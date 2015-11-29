@@ -4,6 +4,7 @@ var buffer = require('vinyl-buffer');
 var Vinyl = require('vinyl');
 var filelog = require('gulp-filelog');
 var svgmin = require('gulp-svgmin');
+var sass = require('gulp-sass');
 
 var browserify = require('browserify');
 var watchify = require('watchify');
@@ -65,6 +66,13 @@ function makeBundle(entryFile, outputFile, watch) {
   return rebundle();
 }
 
+gulp.task('build-styles', function() {
+  return gulp.src('./app/core/manifest.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('build'))
+
+});
+
 gulp.task('build-html', function() {
   return gulp.src('./app/**/*.html')
     .pipe(gulp.dest('build'));
@@ -119,6 +127,7 @@ gulp.task('watch', ['watch-js', 'build-html', 'build-sprites'], function(cb) {
   }, function() {
     gulp.watch(svgSourceFiles(), ['build-sprites']);
     gulp.watch('app/**/*.html', ['build-html']);
+    gulp.watch('app/**/*.scss', ['build-styles']);
     gulp.watch('build/**/*', browserSync.reload);
 
     cb();
