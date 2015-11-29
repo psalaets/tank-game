@@ -41,11 +41,13 @@ var TreadControl = React.createClass({
     return this._rect.top;
   },
   handleTouchStart(event) {
-    var power = this.calculatePower(event.targetTouches[0]);
+    var localY = this.yOnThisControl(event.targetTouches[0]);
+    var power = this.calculatePower(localY, this.getHeight());
     this.updatePower(power);
   },
   handleTouchMove(event) {
-    var power = this.calculatePower(event.targetTouches[0]);
+    var localY = this.yOnThisControl(event.targetTouches[0]);
+    var power = this.calculatePower(localY, this.getHeight());
     this.updatePower(power);
   },
   handleTouchEnd(event) {
@@ -56,14 +58,12 @@ var TreadControl = React.createClass({
     // is touch's y location on div
     return touch.clientY - this.getTop();
   },
-  calculatePower(touch) {
-    var yOnThisControl = this.yOnThisControl(touch);
+  calculatePower(position, size) {
+    // subtract half size so touching in the middle makes power near 0
+    var power = position - size / 2;
 
-    // subtract half height so touching in the middle makes power near 0
-    var power = yOnThisControl - this.getHeight() / 2;
-
-    // divide by half height to normalize
-    power /= this.getHeight() / 2;
+    // divide by half size to normalize
+    power /= size / 2;
 
     // flip so forward is > 0 and reverse is < 0
     power = -power;
