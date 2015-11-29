@@ -29,6 +29,16 @@ Game.prototype = {
 
     return tank;
   },
+  getTank(id) {
+    return this.tanks.find(tank => tank.id === id);
+  },
+  removeTank(id) {
+    var index = this.tanks.findIndex(tank => tank.id === id);
+
+    if (index != -1) {
+      this.tanks.splice(index, 1);
+    }
+  },
   // update game
   update(nowMillis) {
     var nowSeconds = nowMillis / 1000;
