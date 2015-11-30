@@ -2,7 +2,7 @@ var assert = require('assert');
 var React = require('react');
 var TestUtils = require('react-addons-test-utils');
 
-var DrawOffset = require('../../../app/components/draw-offset');
+var DrawOffset = require('../../../app/components/draw-offset/draw-offset');
 
 describe('DrawOffset component', function () {
   it('renders g element', function() {

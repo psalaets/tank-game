@@ -1,6 +1,6 @@
 var React = require('react');
 
-var DrawOffset = require('../draw-offset');
+var DrawOffset = require('../draw-offset/draw-offset');
 
 var Turret = React.createClass({
   propTypes: {

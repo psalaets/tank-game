@@ -1,6 +1,6 @@
 var React = require('react');
 
-var svg = require('./helpers/svg');
+var svg = require('../helpers/svg');
 
 /**
  * Helper component that shifts its children around.

@@ -15,7 +15,7 @@ var controls = document.getElementById('controls');
 
 // game stuff
 
-var GameBoard = require('./components/game-board');
+var GameBoard = require('./components/game-board/game-board');
 
 var turretRotation = 0;
 
