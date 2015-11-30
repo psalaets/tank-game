@@ -1,6 +1,6 @@
 var React = require('react');
 
-var SpriteDefs = require('../sprite-defs');
+var SpriteDefs = require('../sprite-defs/sprite-defs');
 var Tank = require('../tank/tank');
 
 var spriteMetadata = require('../prop-types/sprite-metadata');
