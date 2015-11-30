@@ -1,0 +1,12 @@
+#This is the linter options for scss-lint
+linters:
+  DeclarationOrder:
+    enabled: false
+
+  PropertySortOrder:
+    enabled: false
+
+  PropertyUnits:
+    enabled: true
+    global: [
+      'rem','px', 'vh', 'vw', 'vmin', 'vmax', 'deg', 'rad', 's', '%']
