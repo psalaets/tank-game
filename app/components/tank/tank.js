@@ -3,7 +3,7 @@ var React = require('react');
 var Turret = require('./tank-turret');
 var Body = require('./tank-body');
 
-var svg = require('./helpers/svg');
+var svg = require('../helpers/svg');
 
 // these magic numbers depend on the sprite
 var spriteWidth = 248;
