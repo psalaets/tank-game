@@ -4,7 +4,7 @@ var TestUtils = require('react-addons-test-utils');
 
 var assert = require('assert');
 
-var TreadControl = require('../../../app/components/tread-control');
+var TreadControl = require('../../../app/components/tread-control/tread-control');
 
 describe('TreadControl component', function() {
   var testArea, styles;

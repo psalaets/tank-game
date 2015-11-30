@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var TreadControls = require('./components/tread-controls');
+var TreadControls = require('./components/tread-control/tread-controls');
 
 var socket = io();
 socket.on('connect', function() {

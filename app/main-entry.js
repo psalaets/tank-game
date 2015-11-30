@@ -6,7 +6,7 @@ var p2 = require('@psalaets/p2');
 var request = require('superagent');
 
 var GameLogic = require('./game-logic');
-var TreadControls = require('./components/tread-controls');
+var TreadControls = require('./components/tread-control/tread-controls');
 
 // dom elements
 
