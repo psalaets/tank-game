@@ -1,6 +1,8 @@
 html {
+  // scss-lint:disable VendorPrefix
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  // scss-lint:enable VendorPrefix
 }
 
 body {
@@ -33,9 +35,6 @@ strong {
 a {
   color: inherit;
   transition: .1s;
-}
-
-a {
   text-decoration: none;
 }
 
