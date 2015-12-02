@@ -78,7 +78,8 @@ gulp.task('build-styles', function() {
       ]
     }))
     .pipe(gulp.dest('build'))
-
+    // stream into page for no-reload style updates
+    .pipe(browserSync.stream());
 });
 
 gulp.task('build-html', function() {
@@ -136,7 +137,9 @@ gulp.task('watch', ['watch-js', 'build-html', 'build-sprites', 'build-styles'], 
     gulp.watch(svgSourceFiles(), ['build-sprites']);
     gulp.watch('app/**/*.html', ['build-html']);
     gulp.watch('app/**/*.scss', ['build-styles']);
-    gulp.watch('build/**/*', browserSync.reload);
+    // reload browser for anything in build/ except css, which is injected
+    // by browsersync, see build-styles task.
+    gulp.watch(['build/**/*', '!**/*.css'], browserSync.reload);
 
     cb();
   });
