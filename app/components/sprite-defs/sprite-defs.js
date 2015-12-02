@@ -1,5 +1,5 @@
 var React = require('react');
-var spriteMetadata = require('./prop-types/sprite-metadata');
+var spriteMetadata = require('../prop-types/sprite-metadata');
 
 var SpriteDefs = React.createClass({
   propTypes: {

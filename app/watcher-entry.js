@@ -4,7 +4,7 @@ var request = require('superagent');
 
 var main = document.getElementById('main');
 
-var GameBoard = require('./components/game-board');
+var GameBoard = require('./components/game-board/game-board');
 
 var state = {};
 
