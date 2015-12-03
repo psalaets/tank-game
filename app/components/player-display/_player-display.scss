@@ -1,0 +1,133 @@
+[data-player-display] {
+  // testing
+  margin-top: 1rem;
+  //
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  background-color: $button-color-secondary;
+  background-image: linear-gradient(
+      to bottom,
+      rgba($button-drop-shadows, 0) 0%,
+      $button-drop-shadows 100%
+    );
+}
+
+[data-team] {
+  z-index: 0;
+  position: relative;
+  font-family: 'Titan One', cursive;
+  font-size: 2.7rem;
+  flex: 0 0 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transform: skewX(-10deg);
+  color: white;
+  text-transform: uppercase;
+  background-color: $button-drop-shadows;
+  border-color: darken($button-color-secondary, 10%);
+  border-style: solid;
+  border-width: 0;
+  border-left-width: 1px;
+  text-shadow: 0 4px 0 $button-drop-shadows;
+  box-shadow: inset 0 0 0 white;
+  transition-property: box-shadow
+                       background-color;
+  transition-duration: .2s;
+  transition-timing-function: cubic-bezier(.42, 0, .58, 1);
+
+  &::before {
+    opacity: 0;
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    filter: grayscale(1) opacity(.5);
+    background-position: center center;
+    background-size: cover;
+    transition-property: opacity;
+    transition-duration: .4s;
+    transition-timing-function: cubic-bezier(.42, 0, .58, 1);
+  }
+
+  &:last-of-type {
+    border-right-width: 1px;
+  }
+
+  .color {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+  }
+
+  .name {
+    margin-top: 1rem;
+    font-size: 2rem;
+  }
+
+  .misc {
+    font-size: 1rem;
+    margin-top: .5rem;
+  }
+
+  .confermation {
+    font-size: 3rem;
+    margin-top: .5rem;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: .2s;
+    transition-timing-function: cubic-bezier(.42, 0, .58, 1);
+  }
+
+  &:active {
+    box-shadow: inset 0 5000px 0 rgba(255, 255, 255, 0);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .confermation {
+      font-size: 3rem;
+      margin-top: .5rem;
+      opacity: 1;
+    }
+
+    &:nth-of-type(1) {
+      background-color: red;
+
+      &::before {
+        background-image: url('http://www.placecage.com/g/200/500');
+      }
+    }
+
+    &:nth-of-type(2) {
+      background-color: green;
+
+      &::before {
+        background-image: url('http://www.placecage.com/g/200/300');
+      }
+    }
+
+    &:nth-of-type(3) {
+      background-color: yellow;
+
+      &::before {
+        background-image: url('http://www.placecage.com/g/200/300');
+      }
+    }
+
+    &:nth-of-type(4) {
+      background-color: blue;
+
+      &::before {
+        background-image: url('http://www.placecage.com/g/200/300');
+      }
+    }
+  }
+}
