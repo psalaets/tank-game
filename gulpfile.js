@@ -125,6 +125,8 @@ gulp.task('build-sprites', function() {
     .pipe(gulp.dest('build/svg'));
 });
 
+gulp.task('build', ['build-js', 'build-html', 'build-sprites', 'build-styles']);
+
 gulp.task('watch', ['watch-js', 'build-html', 'build-sprites', 'build-styles'], function(cb) {
   browserSync.init({
     server: {
