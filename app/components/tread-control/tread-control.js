@@ -30,8 +30,19 @@ var TreadControl = React.createClass({
 
     return (
       <div data-tread-control ref="self" {...touchHandlers}>
-        {this.state.power}
+        {this.renderPower(this.state)}
       </div>
+    );
+  },
+  renderPower(state) {
+    if (!state.power) {
+      return null;
+    }
+
+    return (
+      <span>
+        {state.power.x}, {state.power.y}
+      </span>
     );
   },
   getHeight() {
@@ -40,18 +51,48 @@ var TreadControl = React.createClass({
   getTop() {
     return this._rect.top;
   },
+  getLeft() {
+    return this._rect.left;
+  },
+  getWidth() {
+    return this._rect.width;
+  },
   handleTouchStart(event) {
+    var localX = this.localX(event.targetTouches[0]);
+    var powerX = this.calculatePower(localX, this.getWidth());
+
     var localY = this.localY(event.targetTouches[0]);
-    var power = this.calculatePower(localY, this.getHeight());
-    this.updatePower(power);
+    var powerY = this.calculatePower(localY, this.getHeight());
+
+    this.updatePower({
+      x: powerX,
+      // negate so top of the control is 1
+      y: -powerY
+    });
   },
   handleTouchMove(event) {
+    var localX = this.localX(event.targetTouches[0]);
+    var powerX = this.calculatePower(localX, this.getWidth());
+
     var localY = this.localY(event.targetTouches[0]);
-    var power = this.calculatePower(localY, this.getHeight());
-    this.updatePower(power);
+    var powerY = this.calculatePower(localY, this.getHeight());
+
+    this.updatePower({
+      x: powerX,
+      // negate so top of the control is 1
+      y: -powerY
+    });
   },
   handleTouchEnd(event) {
-    this.updatePower(0);
+    this.updatePower({
+      x: 0,
+      y: 0
+    });
+  },
+  localX(touch) {
+    // touch's distance from viewport left minus div's distance from viewport left
+    // is touch's x location on div
+    return touch.clientX - this.getLeft();
   },
   localY(touch) {
     // touch's distance from viewport top minus div's distance from viewport top
@@ -65,9 +106,6 @@ var TreadControl = React.createClass({
     // divide by half size to normalize
     power /= size / 2;
 
-    // flip so forward is > 0 and reverse is < 0
-    power = -power;
-
     // constrain for touchmoves that go way off the element
     power = Math.max(-1, power);
     power = Math.min(1, power);
@@ -75,7 +113,9 @@ var TreadControl = React.createClass({
     return power;
   },
   updatePower(power) {
-    if (power !== this.state.power) {
+    var currentPower = this.state.power;
+
+    if (!currentPower || power.x !== currentPower.x || power.y !== currentPower.y) {
       this.setState({
         power
       });
