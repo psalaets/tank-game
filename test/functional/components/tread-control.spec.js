@@ -68,13 +68,13 @@ describe('TreadControl component', function() {
       var [touchX, touchY, powerX, powerY, location] = testCase;
 
       it('sets power for event at ' + location, function() {
-        var onChange = powerChangeRecorder();
-        var componentInstance = ReactDOM.render(<TreadControl onChange={onChange}/>, testArea);
+        var onPowerChange = powerChangeRecorder();
+        var componentInstance = ReactDOM.render(<TreadControl onPowerChange={onPowerChange}/>, testArea);
         var domNode = ReactDOM.findDOMNode(componentInstance);
 
         TestUtils.Simulate.touchStart(domNode, touchEvent(touchX, touchY));
 
-        assert.deepEqual(onChange.powers, [{x: powerX, y: powerY}]);
+        assert.deepEqual(onPowerChange.powers, [{x: powerX, y: powerY}]);
       });
     });
   });
@@ -84,43 +84,43 @@ describe('TreadControl component', function() {
       var [touchX, touchY, powerX, powerY, location] = testCase;
 
       it('sets power for event at ' + location, function() {
-        var onChange = powerChangeRecorder();
-        var componentInstance = ReactDOM.render(<TreadControl onChange={onChange}/>, testArea);
+        var onPowerChange = powerChangeRecorder();
+        var componentInstance = ReactDOM.render(<TreadControl onPowerChange={onPowerChange}/>, testArea);
         var domNode = ReactDOM.findDOMNode(componentInstance);
 
         TestUtils.Simulate.touchMove(domNode, touchEvent(touchX, touchY));
 
-        assert.deepEqual(onChange.powers, [{x: powerX, y: powerY}]);
+        assert.deepEqual(onPowerChange.powers, [{x: powerX, y: powerY}]);
       });
     });
 
     describe('multiple events', function() {
       it('changes power multiple times', function() {
-        var onChange = powerChangeRecorder();
-        var componentInstance = ReactDOM.render(<TreadControl onChange={onChange}/>, testArea);
+        var onPowerChange = powerChangeRecorder();
+        var componentInstance = ReactDOM.render(<TreadControl onPowerChange={onPowerChange}/>, testArea);
         var domNode = ReactDOM.findDOMNode(componentInstance);
 
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 100));
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 200));
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 300));
 
-        assert.deepEqual(onChange.powers, [
+        assert.deepEqual(onPowerChange.powers, [
           {x: 0, y: 1},
           {x: 0, y: 0},
           {x: 0, y: -1}
         ]);
       });
 
-      it('does not call onChange consecutive times with same power', function() {
-        var onChange = powerChangeRecorder();
-        var componentInstance = ReactDOM.render(<TreadControl onChange={onChange}/>, testArea);
+      it('does not call onPowerChange consecutive times with same power', function() {
+        var onPowerChange = powerChangeRecorder();
+        var componentInstance = ReactDOM.render(<TreadControl onPowerChange={onPowerChange}/>, testArea);
         var domNode = ReactDOM.findDOMNode(componentInstance);
 
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 0));
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 1));
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 2));
 
-        assert.deepEqual(onChange.powers, [
+        assert.deepEqual(onPowerChange.powers, [
           {x: 0, y: 1}
         ]);
       });
@@ -129,13 +129,13 @@ describe('TreadControl component', function() {
 
   describe('on touchend event', function() {
     it('changes power to zero', function() {
-      var onChange = powerChangeRecorder();
-      var componentInstance = ReactDOM.render(<TreadControl onChange={onChange}/>, testArea);
+      var onPowerChange = powerChangeRecorder();
+      var componentInstance = ReactDOM.render(<TreadControl onPowerChange={onPowerChange}/>, testArea);
       var domNode = ReactDOM.findDOMNode(componentInstance);
 
       TestUtils.Simulate.touchEnd(domNode);
 
-      assert.deepEqual(onChange.powers, [{x: 0, y: 0}]);
+      assert.deepEqual(onPowerChange.powers, [{x: 0, y: 0}]);
     });
   });
 });

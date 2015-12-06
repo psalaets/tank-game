@@ -2,7 +2,7 @@ var React = require('react');
 
 var TreadControl = React.createClass({
   propTypes: {
-    onChange: React.PropTypes.func
+    onPowerChange: React.PropTypes.func
   },
   getInitialState() {
     return {
@@ -105,7 +105,7 @@ var TreadControl = React.createClass({
         power
       });
 
-      this.props.onChange(power);
+      this.props.onPowerChange(power);
     }
   }
 });
