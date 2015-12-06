@@ -69,6 +69,7 @@ var TouchSurface = React.createClass({
     this.calculateAndUpdateCursor(event);
   },
   handleTouchMove(event) {
+    event.preventDefault();
     this.calculateAndUpdateCursor(event);
   },
   calculateAndUpdateCursor(touchEvent) {

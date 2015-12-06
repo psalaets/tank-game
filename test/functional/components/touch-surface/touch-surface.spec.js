@@ -94,6 +94,19 @@ describe('TouchSurface component', function() {
       });
     });
 
+    it('prevents default', function() {
+      var preventions = 0;
+      var event = touchEvent(midX, midY);
+      event.preventDefault = () => preventions += 1;
+
+      var componentInstance = ReactDOM.render(<TouchSurface onCursorChange={() => {}}/>, testArea);
+      var domNode = ReactDOM.findDOMNode(componentInstance);
+
+      TestUtils.Simulate.touchMove(domNode, event);
+
+      assert.equal(preventions, 1);
+    });
+
     describe('multiple events', function() {
       it('changes cursor multiple times', function() {
         var onCursorChange = cursorChangeRecorder();
