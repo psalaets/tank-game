@@ -16,19 +16,19 @@ var TreadControls = React.createClass({
   render() {
     return (
       <div data-tread-controls>
-        <TouchSurface onPowerChange={this.handleLeftChange}/>
-        <TouchSurface onPowerChange={this.handleRightChange}/>
+        <TouchSurface onCursorChange={this.handleLeftChange}/>
+        <TouchSurface onCursorChange={this.handleRightChange}/>
       </div>
     );
   },
-  handleLeftChange(power) {
+  handleLeftChange(cursor) {
     // negate so up is 1
-    var y = -power.y;
+    var y = -cursor.y;
     this.props.onLeftChange(y);
   },
-  handleRightChange(power) {
+  handleRightChange(cursor) {
     // negate so up is 1
-    var y = -power.y;
+    var y = -cursor.y;
     this.props.onRightChange(y);
   }
 });

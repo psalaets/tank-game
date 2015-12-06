@@ -49,7 +49,7 @@ describe('TouchSurface component', function() {
   });
 
   var touchingTestCases = [
-    // touch x, touch y, power x, power y, location name
+    // touch x, touch y, cursor x, cursor y, location name
     [left, top, -1, -1, 'top/left'],
     [midX, top, 0, -1, 'top/center'],
     [right, top, 1, -1, 'top/right'],
@@ -65,62 +65,62 @@ describe('TouchSurface component', function() {
 
   describe('on touchstart event', function() {
     touchingTestCases.forEach(function(testCase) {
-      var [touchX, touchY, powerX, powerY, location] = testCase;
+      var [touchX, touchY, cursorX, cursorY, location] = testCase;
 
-      it('sets power for event at ' + location, function() {
-        var onPowerChange = powerChangeRecorder();
-        var componentInstance = ReactDOM.render(<TouchSurface onPowerChange={onPowerChange}/>, testArea);
+      it('sets cursor for event at ' + location, function() {
+        var onCursorChange = cursorChangeRecorder();
+        var componentInstance = ReactDOM.render(<TouchSurface onCursorChange={onCursorChange}/>, testArea);
         var domNode = ReactDOM.findDOMNode(componentInstance);
 
         TestUtils.Simulate.touchStart(domNode, touchEvent(touchX, touchY));
 
-        assert.deepEqual(onPowerChange.powers, [{x: powerX, y: powerY}]);
+        assert.deepEqual(onCursorChange.cursors, [{x: cursorX, y: cursorY}]);
       });
     });
   });
 
   describe('on touchmove event', function() {
     touchingTestCases.forEach(function(testCase) {
-      var [touchX, touchY, powerX, powerY, location] = testCase;
+      var [touchX, touchY, cursorX, cursorY, location] = testCase;
 
-      it('sets power for event at ' + location, function() {
-        var onPowerChange = powerChangeRecorder();
-        var componentInstance = ReactDOM.render(<TouchSurface onPowerChange={onPowerChange}/>, testArea);
+      it('sets cursor for event at ' + location, function() {
+        var onCursorChange = cursorChangeRecorder();
+        var componentInstance = ReactDOM.render(<TouchSurface onCursorChange={onCursorChange}/>, testArea);
         var domNode = ReactDOM.findDOMNode(componentInstance);
 
         TestUtils.Simulate.touchMove(domNode, touchEvent(touchX, touchY));
 
-        assert.deepEqual(onPowerChange.powers, [{x: powerX, y: powerY}]);
+        assert.deepEqual(onCursorChange.cursors, [{x: cursorX, y: cursorY}]);
       });
     });
 
     describe('multiple events', function() {
-      it('changes power multiple times', function() {
-        var onPowerChange = powerChangeRecorder();
-        var componentInstance = ReactDOM.render(<TouchSurface onPowerChange={onPowerChange}/>, testArea);
+      it('changes cursor multiple times', function() {
+        var onCursorChange = cursorChangeRecorder();
+        var componentInstance = ReactDOM.render(<TouchSurface onCursorChange={onCursorChange}/>, testArea);
         var domNode = ReactDOM.findDOMNode(componentInstance);
 
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 100));
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 200));
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 300));
 
-        assert.deepEqual(onPowerChange.powers, [
+        assert.deepEqual(onCursorChange.cursors, [
           {x: 0, y: -1},
           {x: 0, y: 0},
           {x: 0, y: 1}
         ]);
       });
 
-      it('does not call onPowerChange consecutive times with same power', function() {
-        var onPowerChange = powerChangeRecorder();
-        var componentInstance = ReactDOM.render(<TouchSurface onPowerChange={onPowerChange}/>, testArea);
+      it('does not call onCursorChange consecutive times with same cursor position', function() {
+        var onCursorChange = cursorChangeRecorder();
+        var componentInstance = ReactDOM.render(<TouchSurface onCursorChange={onCursorChange}/>, testArea);
         var domNode = ReactDOM.findDOMNode(componentInstance);
 
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 0));
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 1));
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 2));
 
-        assert.deepEqual(onPowerChange.powers, [
+        assert.deepEqual(onCursorChange.cursors, [
           {x: 0, y: -1}
         ]);
       });
@@ -128,14 +128,14 @@ describe('TouchSurface component', function() {
   });
 
   describe('on touchend event', function() {
-    it('changes power to zero', function() {
-      var onPowerChange = powerChangeRecorder();
-      var componentInstance = ReactDOM.render(<TouchSurface onPowerChange={onPowerChange}/>, testArea);
+    it('changes cursor to zero', function() {
+      var onCursorChange = cursorChangeRecorder();
+      var componentInstance = ReactDOM.render(<TouchSurface onCursorChange={onCursorChange}/>, testArea);
       var domNode = ReactDOM.findDOMNode(componentInstance);
 
       TestUtils.Simulate.touchEnd(domNode);
 
-      assert.deepEqual(onPowerChange.powers, [{x: 0, y: 0}]);
+      assert.deepEqual(onCursorChange.cursors, [{x: 0, y: 0}]);
     });
   });
 });
@@ -149,11 +149,11 @@ function touchEvent(clientX, clientY) {
   };
 }
 
-function powerChangeRecorder() {
-  function recordPowerChanges(power) {
-    recordPowerChanges.powers.push(power);
+function cursorChangeRecorder() {
+  function recordCursorChanges(cursor) {
+    recordCursorChanges.cursors.push(cursor);
   }
 
-  recordPowerChanges.powers = [];
-  return recordPowerChanges;
+  recordCursorChanges.cursors = [];
+  return recordCursorChanges;
 }

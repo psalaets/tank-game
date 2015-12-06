@@ -2,11 +2,11 @@ var React = require('react');
 
 var TouchSurface = React.createClass({
   propTypes: {
-    onPowerChange: React.PropTypes.func
+    onCursorChange: React.PropTypes.func
   },
   getInitialState() {
     return {
-      power: null
+      cursor: null
     };
   },
   componentDidMount() {
@@ -30,18 +30,18 @@ var TouchSurface = React.createClass({
 
     return (
       <div data-touch-surface ref="self" {...touchHandlers}>
-        {this.renderPower(this.state)}
+        {this.renderCursor(this.state)}
       </div>
     );
   },
-  renderPower(state) {
-    if (!state.power) {
+  renderCursor(state) {
+    if (!state.cursor) {
       return null;
     }
 
     return (
       <span>
-        {state.power.x}, {state.power.y}
+        {state.cursor.x}, {state.cursor.y}
       </span>
     );
   },
@@ -58,53 +58,53 @@ var TouchSurface = React.createClass({
     return this._rect.width;
   },
   handleTouchStart(event) {
-    this.calculateAndUpdatePower(event);
+    this.calculateAndUpdateCursor(event);
   },
   handleTouchMove(event) {
-    this.calculateAndUpdatePower(event);
+    this.calculateAndUpdateCursor(event);
   },
-  calculateAndUpdatePower(touchEvent) {
+  calculateAndUpdateCursor(touchEvent) {
     var touch = touchEvent.targetTouches[0];
 
     var localX = touch.clientX - this.getLeft();
-    var powerX = this.calculatePower(localX, this.getWidth());
+    var cursorX = this.calculateCursor(localX, this.getWidth());
 
     var localY = touch.clientY - this.getTop();
-    var powerY = this.calculatePower(localY, this.getHeight());
+    var cursorY = this.calculateCursor(localY, this.getHeight());
 
-    this.updatePower({
-      x: powerX,
-      y: powerY
+    this.updateCursor({
+      x: cursorX,
+      y: cursorY
     });
   },
   handleTouchEnd(event) {
-    this.updatePower({
+    this.updateCursor({
       x: 0,
       y: 0
     });
   },
-  calculatePower(position, size) {
-    // subtract half size so touching in the middle makes power near 0
-    var power = position - size / 2;
+  calculateCursor(position, size) {
+    // subtract half size so touching in the middle makes value near 0
+    var value = position - size / 2;
 
     // divide by half size to normalize
-    power /= size / 2;
+    value /= size / 2;
 
     // constrain for touchmoves that go way off the element
-    power = Math.max(-1, power);
-    power = Math.min(1, power);
+    value = Math.max(-1, value);
+    value = Math.min(1, value);
 
-    return power;
+    return value;
   },
-  updatePower(power) {
-    var previousPower = this.state.power;
+  updateCursor(cursor) {
+    var previousCursor = this.state.cursor;
 
-    if (!previousPower || power.x !== previousPower.x || power.y !== previousPower.y) {
+    if (!previousCursor || cursor.x !== previousCursor.x || cursor.y !== previousCursor.y) {
       this.setState({
-        power
+        cursor
       });
 
-      this.props.onPowerChange(power);
+      this.props.onCursorChange(cursor);
     }
   }
 });
