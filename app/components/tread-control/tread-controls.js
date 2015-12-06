@@ -1,6 +1,6 @@
 var React = require('react');
 
-var TreadControl = require('./tread-control');
+var TouchSurface = require('../touch-surface/touch-surface');
 
 var TreadControls = React.createClass({
   propTypes: {
@@ -16,8 +16,8 @@ var TreadControls = React.createClass({
   render() {
     return (
       <div data-tread-controls>
-        <TreadControl onChange={this.handleLeftChange}/>
-        <TreadControl onChange={this.handleRightChange}/>
+        <TouchSurface onPowerChange={this.handleLeftChange}/>
+        <TouchSurface onPowerChange={this.handleRightChange}/>
       </div>
     );
   },

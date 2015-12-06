@@ -4,9 +4,9 @@ var TestUtils = require('react-addons-test-utils');
 
 var assert = require('assert');
 
-var TreadControl = require('../../../app/components/tread-control/tread-control');
+var TouchSurface = require('../../../app/components/touch-surface/touch-surface');
 
-describe('TreadControl component', function() {
+describe('TouchSurface component', function() {
   var testArea, styles;
 
   var top = 100;
@@ -25,7 +25,7 @@ describe('TreadControl component', function() {
 
     styles = document.createElement('style');
     styles.innerHTML = `
-      [data-tread-control] {
+      [data-touch-surface] {
         position: fixed;
 
         top: ${top}px;
@@ -69,7 +69,7 @@ describe('TreadControl component', function() {
 
       it('sets power for event at ' + location, function() {
         var onPowerChange = powerChangeRecorder();
-        var componentInstance = ReactDOM.render(<TreadControl onPowerChange={onPowerChange}/>, testArea);
+        var componentInstance = ReactDOM.render(<TouchSurface onPowerChange={onPowerChange}/>, testArea);
         var domNode = ReactDOM.findDOMNode(componentInstance);
 
         TestUtils.Simulate.touchStart(domNode, touchEvent(touchX, touchY));
@@ -85,7 +85,7 @@ describe('TreadControl component', function() {
 
       it('sets power for event at ' + location, function() {
         var onPowerChange = powerChangeRecorder();
-        var componentInstance = ReactDOM.render(<TreadControl onPowerChange={onPowerChange}/>, testArea);
+        var componentInstance = ReactDOM.render(<TouchSurface onPowerChange={onPowerChange}/>, testArea);
         var domNode = ReactDOM.findDOMNode(componentInstance);
 
         TestUtils.Simulate.touchMove(domNode, touchEvent(touchX, touchY));
@@ -97,7 +97,7 @@ describe('TreadControl component', function() {
     describe('multiple events', function() {
       it('changes power multiple times', function() {
         var onPowerChange = powerChangeRecorder();
-        var componentInstance = ReactDOM.render(<TreadControl onPowerChange={onPowerChange}/>, testArea);
+        var componentInstance = ReactDOM.render(<TouchSurface onPowerChange={onPowerChange}/>, testArea);
         var domNode = ReactDOM.findDOMNode(componentInstance);
 
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 100));
@@ -113,7 +113,7 @@ describe('TreadControl component', function() {
 
       it('does not call onPowerChange consecutive times with same power', function() {
         var onPowerChange = powerChangeRecorder();
-        var componentInstance = ReactDOM.render(<TreadControl onPowerChange={onPowerChange}/>, testArea);
+        var componentInstance = ReactDOM.render(<TouchSurface onPowerChange={onPowerChange}/>, testArea);
         var domNode = ReactDOM.findDOMNode(componentInstance);
 
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 0));
@@ -130,7 +130,7 @@ describe('TreadControl component', function() {
   describe('on touchend event', function() {
     it('changes power to zero', function() {
       var onPowerChange = powerChangeRecorder();
-      var componentInstance = ReactDOM.render(<TreadControl onPowerChange={onPowerChange}/>, testArea);
+      var componentInstance = ReactDOM.render(<TouchSurface onPowerChange={onPowerChange}/>, testArea);
       var domNode = ReactDOM.findDOMNode(componentInstance);
 
       TestUtils.Simulate.touchEnd(domNode);

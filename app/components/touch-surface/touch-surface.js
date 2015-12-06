@@ -1,6 +1,6 @@
 var React = require('react');
 
-var TreadControl = React.createClass({
+var TouchSurface = React.createClass({
   propTypes: {
     onPowerChange: React.PropTypes.func
   },
@@ -29,7 +29,7 @@ var TreadControl = React.createClass({
     };
 
     return (
-      <div data-tread-control ref="self" {...touchHandlers}>
+      <div data-touch-surface ref="self" {...touchHandlers}>
         {this.renderPower(this.state)}
       </div>
     );
@@ -110,4 +110,4 @@ var TreadControl = React.createClass({
   }
 });
 
-module.exports = TreadControl;
+module.exports = TouchSurface;
