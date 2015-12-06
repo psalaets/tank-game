@@ -2,7 +2,15 @@ var React = require('react');
 
 var TouchSurface = React.createClass({
   propTypes: {
-    onCursorChange: React.PropTypes.func
+    onCursorChange: React.PropTypes.func.isRequired,
+    // true to move cursor to 0,0 when touch ends, false to leave where it is
+    // Default: true
+    snapBack: React.PropTypes.bool
+  },
+  getDefaultProps() {
+    return {
+      snapBack: true
+    };
   },
   getInitialState() {
     return {
@@ -78,10 +86,12 @@ var TouchSurface = React.createClass({
     });
   },
   handleTouchEnd(event) {
-    this.updateCursor({
-      x: 0,
-      y: 0
-    });
+    if (this.props.snapBack) {
+      this.updateCursor({
+        x: 0,
+        y: 0
+      });
+    }
   },
   calculateCursor(position, size) {
     // subtract half size so touching in the middle makes value near 0

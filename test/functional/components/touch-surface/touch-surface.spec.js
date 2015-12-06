@@ -128,7 +128,7 @@ describe('TouchSurface component', function() {
   });
 
   describe('on touchend event', function() {
-    it('changes cursor to zero', function() {
+    it('moves cursor to (0, 0)', function() {
       var onCursorChange = cursorChangeRecorder();
       var componentInstance = ReactDOM.render(<TouchSurface onCursorChange={onCursorChange}/>, testArea);
       var domNode = ReactDOM.findDOMNode(componentInstance);
@@ -136,6 +136,19 @@ describe('TouchSurface component', function() {
       TestUtils.Simulate.touchEnd(domNode);
 
       assert.deepEqual(onCursorChange.cursors, [{x: 0, y: 0}]);
+    });
+
+    describe('when snapBack is false', function() {
+      it('leaves cursor where it is', function() {
+        var onCursorChange = cursorChangeRecorder();
+        var componentInstance = ReactDOM.render(<TouchSurface onCursorChange={onCursorChange} snapBack={false}/>, testArea);
+        var domNode = ReactDOM.findDOMNode(componentInstance);
+
+        TestUtils.Simulate.touchStart(domNode, touchEvent(left, top));
+        TestUtils.Simulate.touchEnd(domNode);
+
+        assert.deepEqual(onCursorChange.cursors, [{x: -1, y: -1}]);
+      });
     });
   });
 });
