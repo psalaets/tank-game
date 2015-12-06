@@ -4,7 +4,7 @@ var TestUtils = require('react-addons-test-utils');
 
 var assert = require('assert');
 
-var TouchSurface = require('../../../app/components/touch-surface/touch-surface');
+var TouchSurface = require('../../../../app/components/touch-surface/touch-surface');
 
 describe('TouchSurface component', function() {
   var testArea, styles;
@@ -50,17 +50,17 @@ describe('TouchSurface component', function() {
 
   var touchingTestCases = [
     // touch x, touch y, power x, power y, location name
-    [left, top, -1, 1, 'top/left'],
-    [midX, top, 0, 1, 'top/center'],
-    [right, top, 1, 1, 'top/right'],
+    [left, top, -1, -1, 'top/left'],
+    [midX, top, 0, -1, 'top/center'],
+    [right, top, 1, -1, 'top/right'],
 
     [left, midY, -1, 0, 'middle/left'],
     [midX, midY, 0, 0, 'middle/center'],
     [right, midY, 1, 0, 'middle/right'],
 
-    [left, bottom, -1, -1, 'bottom/left'],
-    [midX, bottom, 0, -1, 'bottom/center'],
-    [right, bottom, 1, -1, 'bottom/right']
+    [left, bottom, -1, 1, 'bottom/left'],
+    [midX, bottom, 0, 1, 'bottom/center'],
+    [right, bottom, 1, 1, 'bottom/right']
   ];
 
   describe('on touchstart event', function() {
@@ -105,9 +105,9 @@ describe('TouchSurface component', function() {
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 300));
 
         assert.deepEqual(onPowerChange.powers, [
-          {x: 0, y: 1},
+          {x: 0, y: -1},
           {x: 0, y: 0},
-          {x: 0, y: -1}
+          {x: 0, y: 1}
         ]);
       });
 
@@ -121,7 +121,7 @@ describe('TouchSurface component', function() {
         TestUtils.Simulate.touchMove(domNode, touchEvent(midX, 2));
 
         assert.deepEqual(onPowerChange.powers, [
-          {x: 0, y: 1}
+          {x: 0, y: -1}
         ]);
       });
     });

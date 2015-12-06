@@ -22,10 +22,14 @@ var TreadControls = React.createClass({
     );
   },
   handleLeftChange(power) {
-    this.props.onLeftChange(power);
+    // negate so up is 1
+    var y = -power.y;
+    this.props.onLeftChange(y);
   },
   handleRightChange(power) {
-    this.props.onRightChange(power);
+    // negate so up is 1
+    var y = -power.y;
+    this.props.onRightChange(y);
   }
 });
 

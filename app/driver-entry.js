@@ -9,13 +9,13 @@ socket.on('connect', function() {
 
 function leftThrottle(power) {
   socket.emit('left-throttle', {
-    power: power.y
+    power: power
   });
 }
 
 function rightThrottle(power) {
   socket.emit('right-throttle', {
-    power: power.y
+    power: power
   });
 }
 

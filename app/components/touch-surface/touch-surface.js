@@ -74,8 +74,7 @@ var TouchSurface = React.createClass({
 
     this.updatePower({
       x: powerX,
-      // negate so top of the control is 1
-      y: -powerY
+      y: powerY
     });
   },
   handleTouchEnd(event) {
