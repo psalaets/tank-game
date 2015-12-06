@@ -58,23 +58,18 @@ var TreadControl = React.createClass({
     return this._rect.width;
   },
   handleTouchStart(event) {
-    var localX = this.localX(event.targetTouches[0]);
-    var powerX = this.calculatePower(localX, this.getWidth());
-
-    var localY = this.localY(event.targetTouches[0]);
-    var powerY = this.calculatePower(localY, this.getHeight());
-
-    this.updatePower({
-      x: powerX,
-      // negate so top of the control is 1
-      y: -powerY
-    });
+    this.calculateAndUpdatePower(event);
   },
   handleTouchMove(event) {
-    var localX = this.localX(event.targetTouches[0]);
+    this.calculateAndUpdatePower(event);
+  },
+  calculateAndUpdatePower(touchEvent) {
+    var touch = touchEvent.targetTouches[0];
+
+    var localX = touch.clientX - this.getLeft();
     var powerX = this.calculatePower(localX, this.getWidth());
 
-    var localY = this.localY(event.targetTouches[0]);
+    var localY = touch.clientY - this.getTop();
     var powerY = this.calculatePower(localY, this.getHeight());
 
     this.updatePower({
@@ -88,16 +83,6 @@ var TreadControl = React.createClass({
       x: 0,
       y: 0
     });
-  },
-  localX(touch) {
-    // touch's distance from viewport left minus div's distance from viewport left
-    // is touch's x location on div
-    return touch.clientX - this.getLeft();
-  },
-  localY(touch) {
-    // touch's distance from viewport top minus div's distance from viewport top
-    // is touch's y location on div
-    return touch.clientY - this.getTop();
   },
   calculatePower(position, size) {
     // subtract half size so touching in the middle makes power near 0
@@ -113,9 +98,9 @@ var TreadControl = React.createClass({
     return power;
   },
   updatePower(power) {
-    var currentPower = this.state.power;
+    var previousPower = this.state.power;
 
-    if (!currentPower || power.x !== currentPower.x || power.y !== currentPower.y) {
+    if (!previousPower || power.x !== previousPower.x || power.y !== previousPower.y) {
       this.setState({
         power
       });
