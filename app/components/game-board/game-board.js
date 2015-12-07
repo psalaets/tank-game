@@ -1,5 +1,6 @@
 var React = require('react');
 
+var Svg = require('../svg/svg');
 var SpriteDefs = require('../sprite-defs/sprite-defs');
 var Tank = require('../tank/tank');
 
@@ -18,11 +19,17 @@ var GameBoard = React.createClass({
       );
     });
 
+    var camera = {
+      x: 400,
+      y: 300,
+      zoom: 0.25
+    };
+
     return (
-      <svg transform="scale(0.4)">
+      <Svg camera={camera}>
         <SpriteDefs sprites={this.props.sprites}/>
         {tanks}
-      </svg>
+      </Svg>
     );
   }
 });
