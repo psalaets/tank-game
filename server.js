@@ -46,6 +46,7 @@ gameLoop.start();
 
 app.use(express.static('./build'));
 
-http.listen(4000, function() {
-  console.log('server listening on port 4000');
+var port = process.env.PORT || 4000;
+http.listen(port, function() {
+  console.log('server listening on port ' + port);
 });
