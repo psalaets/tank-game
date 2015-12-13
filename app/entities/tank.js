@@ -2,8 +2,8 @@ var p2 = require('@psalaets/p2');
 
 module.exports = Tank;
 
-var maxThrottleForce = 30;
-var noThrottleBrakeForce = 60;
+var maxThrottleForce = 45;
+var noThrottleBrakeForce = 90;
 
 function Tank(id, x, y) {
   var width = 230;
