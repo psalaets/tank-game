@@ -50,7 +50,7 @@ GameLogic.prototype = {
           x: tank.x,
           y: tank.y,
           rotation: tank.rotation,
-          turretRotation: 0
+          turretRotation: tank.turretRotation
         };
       })
     };

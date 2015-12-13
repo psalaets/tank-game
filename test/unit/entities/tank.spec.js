@@ -22,6 +22,12 @@ describe('Tank entity', function() {
 
         assert.equal(tank.rotation, 0);
       });
+
+      it('has no turret rotation', function() {
+        var tank = new Tank(5);
+
+        assert.equal(tank.turretRotation, 0);
+      });
     });
 
     describe('with properties specified', function () {

@@ -118,6 +118,11 @@ Tank.prototype = {
 };
 
 Object.defineProperties(Tank.prototype, {
+  turretRotation: {
+    get: function() {
+      return 0;
+    }
+  },
   rotation: {
     get: function() {
       var angle = normalizeAngle(this.body.angle);
