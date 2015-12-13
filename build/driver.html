@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Driver</title>
+
+  <style>
+    [data-tread-controls] {
+      display: flex;
+      flex-direction: row;
+    }
+
+    [data-touch-surface] {
+      flex: 0 0 50%;
+      height: 200px;
+      outline: 1px blue solid;
+      user-select: none;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="controls"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="driver-bundle.js"></script>
+</body>
+</html>

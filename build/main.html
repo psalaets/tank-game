@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Document</title>
+  <style>
+    #main {
+      outline: 1px red solid;
+      position: relative;
+      max-height: 80vh;
+    }
+
+    #main::before {
+      content: '';
+      display: block;
+      padding-bottom: 56.25%;
+      /*View box needs to scale with this ratio. ... I think.*/
+    }
+
+    #main > svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    [data-hitbox] {
+      fill-opacity: 0;
+      stroke-opacity: 1;
+      stroke: red;
+      stroke-width: 2px;
+    }
+
+    [data-tread-controls] {
+      display: flex;
+      flex-direction: row;
+    }
+
+    [data-tread-control] {
+      flex: 0 0 50%;
+      height: 200px;
+      outline: 1px blue solid;
+      user-select: none;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="main"></div>
+  <div id="controls"></div>
+
+  <script src="main-bundle.js"></script>
+</body>
+</html>
