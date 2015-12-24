@@ -114,6 +114,18 @@ Tank.prototype = {
   removeFromWorld: function(world) {
     world.removeBody(this.body);
     this.vehicle.removeFromWorld(world);
+  },
+  /**
+  * @return {Object} containing raw data properties of this tank
+  */
+  toData: function() {
+    return {
+      id: this.id,
+      x: this.x,
+      y: this.y,
+      rotation: this.rotation,
+      turretRotation: this.turretRotation
+    };
   }
 };
 

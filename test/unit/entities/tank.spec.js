@@ -51,4 +51,22 @@ describe('Tank entity', function() {
       });
     });
   });
+
+  describe('#toData()', function () {
+    it('returns object with tank properties', function () {
+      var tank = new Tank(1, {
+        x: 5,
+        y: 10,
+        rotation: 180
+      });
+
+      assert.deepEqual(tank.toData(), {
+        id: 1,
+        x: 5,
+        y: 10,
+        rotation: 180,
+        turretRotation: 0
+      });
+    });
+  });
 });
