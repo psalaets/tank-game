@@ -8,6 +8,7 @@ var spriteMetadata = require('../prop-types/sprite-metadata');
 var tank = require('../prop-types/tank');
 
 var GameBoard = React.createClass({
+  displayName: 'GameBoard',
   propTypes: {
     sprites: spriteMetadata.isRequired,
     tanks: React.PropTypes.arrayOf(tank)

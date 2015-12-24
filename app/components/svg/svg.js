@@ -1,6 +1,7 @@
 var React = require('react');
 
 var Svg = React.createClass({
+  displayName: 'Svg',
   propTypes: {
     camera: React.PropTypes.shape({
       x: React.PropTypes.number,
