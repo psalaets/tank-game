@@ -3,6 +3,7 @@ var React = require('react');
 var DrawOffset = require('../draw-offset/draw-offset');
 
 var Turret = React.createClass({
+  displayName: 'TankTurret',
   propTypes: {
     rotation: React.PropTypes.number.isRequired
   },
