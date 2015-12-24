@@ -37,18 +37,61 @@ describe('Tank entity', function() {
         assert.equal(tank.id, 5);
       });
 
-      it('sets position', function() {
+      it('can set position', function() {
         var tank = new Tank(5, {x : 10, y: 15});
 
         assert.equal(tank.x, 10);
         assert.equal(tank.y, 15);
       });
 
-      it('sets rotation', function() {
+      it('can set rotation', function() {
         var tank = new Tank(5, {rotation: 90});
 
         assert.equal(tank.rotation, 90);
       });
+
+      it('can set turret rotation', function() {
+        var tank = new Tank(5, {turretRotation: 70});
+
+        assert.equal(tank.turretRotation, 70);
+      });
+    });
+  });
+
+  describe('.aimVector', function () {
+    it('should point up by default', function () {
+      var tank = new Tank(1);
+
+      assert.equal(tank.aimVector.x, 0);
+      assert.equal(tank.aimVector.y, -1);
+    });
+
+    it('rotates with tank rotation', function () {
+      var tank = new Tank(1, {
+        rotation: 90
+      });
+
+      assert.equal(tank.aimVector.x, 1);
+      assert.equal(tank.aimVector.y, 0);
+    });
+
+    it('rotates with turret rotation', function () {
+      var tank = new Tank(1, {
+        turretRotation: 270
+      });
+
+      assert.equal(tank.aimVector.x, -1);
+      assert.equal(tank.aimVector.y, 0);
+    });
+
+    it('is based on tank rotation plus turret rotation', function () {
+      var tank = new Tank(1, {
+        rotation: 90,
+        turretRotation: 90
+      });
+
+      assert.equal(tank.aimVector.x, 0);
+      assert.equal(tank.aimVector.y, 1);
     });
   });
 

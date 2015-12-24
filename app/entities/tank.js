@@ -1,4 +1,5 @@
 var p2 = require('@psalaets/p2');
+var vec2 = require('vec2');
 
 module.exports = Tank;
 
@@ -12,19 +13,18 @@ var noThrottleBrakeForce = 90;
 * @param {Object} properties - object of initial properties for the tank.
 *        allowed properties: x, y, rotation
 */
-function Tank(id, properties) {
+function Tank(id, properties = {}) {
   var width = 230;
   var height = 300;
 
   this.id = id;
 
-  properties = properties || {};
-  var x = properties.x;
-  var y = properties.y
+  var x = properties.x || 0;
+  var y = properties.y || 0;
   var rotation = properties.rotation || 0;
   var rotationRadians = degreesToRadians(rotation);
-  x = x || 0;
-  y = y || 0;
+
+  this.turretRotation = properties.turretRotation || 0;
 
   this.body = createBody(x, y, width, height, rotationRadians);
   this.vehicle = createVehicle(this.body);
@@ -130,11 +130,6 @@ Tank.prototype = {
 };
 
 Object.defineProperties(Tank.prototype, {
-  turretRotation: {
-    get: function() {
-      return 0;
-    }
-  },
   rotation: {
     get: function() {
       var angle = normalizeAngle(this.body.angle);
@@ -149,6 +144,19 @@ Object.defineProperties(Tank.prototype, {
   y: {
     get: function() {
       return this.body.position[1];
+    }
+  },
+  aimVector: {
+    get: function() {
+      var aimVector = vec2(0, -1);
+
+      // rotate by tank rotation
+      aimVector.rotate(this.body.angle);
+
+      // rotate by turret rotation
+      aimVector.rotate(degreesToRadians(this.turretRotation));
+
+      return aimVector;
     }
   }
 });
