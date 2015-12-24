@@ -16,16 +16,18 @@ var maxTurretRotationSpeed = 45;
 * @param {Object} properties - object of initial properties for the tank.
 *        allowed properties: x, y, rotation
 */
-function Tank(id, properties = {}) {
+function Tank(id, properties) {
   var width = 230;
   var height = 300;
 
   this.id = id;
 
+  properties = properties || {};
   var x = properties.x || 0;
   var y = properties.y || 0;
   var rotation = properties.rotation || 0;
   this.turretRotation = properties.turretRotation || 0;
+  this.turretThrottle = 0;
 
   this.body = createBody(x, y, width, height, degreesToRadians(rotation));
   this.vehicle = createVehicle(this.body);

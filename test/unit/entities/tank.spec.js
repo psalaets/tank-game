@@ -28,6 +28,12 @@ describe('Tank entity', function() {
 
         assert.equal(tank.turretRotation, 0);
       });
+
+      it('has no turret throttle', function() {
+        var tank = new Tank(5);
+
+        assert.equal(tank.turretThrottle, 0);
+      });
     });
 
     describe('with properties specified', function () {

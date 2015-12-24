@@ -40,6 +40,8 @@ GameLogic.prototype = {
   // update game
   update(deltaSeconds) {
     this.world.step(1 / 30, deltaSeconds);
+
+    this.tanks.forEach(tank => tank.update(deltaSeconds));
   },
   // state of everything in the game
   getState() {
