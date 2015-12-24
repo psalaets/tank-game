@@ -58,6 +58,35 @@ describe('Tank entity', function() {
     });
   });
 
+  describe('turret', function () {
+    it('does not rotate when turret throttle is 0', function () {
+      var tank = new Tank(1);
+      tank.setTurretThrottle(0);
+
+      tank.update(1);
+
+      assert.equal(tank.turretRotation, 0);
+    });
+
+    it('rotates clockwise when turret throttle is > 0', function () {
+      var tank = new Tank(1);
+      tank.setTurretThrottle(0.5);
+
+      tank.update(1);
+
+      assert.equal(tank.turretRotation, 22.5);
+    });
+
+    it('rotates counter-clockwise when turret throttle is < 0', function () {
+      var tank = new Tank(1);
+      tank.setTurretThrottle(-0.5);
+
+      tank.update(1);
+
+      assert.equal(tank.turretRotation, 360 - 22.5);
+    });
+  });
+
   describe('.aimVector', function () {
     it('should point up by default', function () {
       var tank = new Tank(1);
