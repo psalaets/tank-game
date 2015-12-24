@@ -22,12 +22,12 @@ io.on('connection', function(socket) {
 
       socket.on('left-throttle', function(obj) {
         // negate power because phyiscs is y-up but svg is y-down
-        tank.leftThrottle(-obj.power);
+        tank.setLeftThrottle(-obj.power);
       });
 
       socket.on('right-throttle', function(obj) {
         // negate power because phyiscs is y-up but svg is y-down
-        tank.rightThrottle(-obj.power);
+        tank.setRightThrottle(-obj.power);
       });
     } else if (type == 'watcher') {
       socket.join('watchers');

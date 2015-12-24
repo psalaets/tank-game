@@ -14,8 +14,8 @@ var gameLoop = createGameLoop(function(delta) {
   gameLogic.update(delta);
 
   if (fires > 150) {
-    tank1.leftThrottle(1);
-    tank1.rightThrottle(1);
+    tank1.setLeftThrottle(1);
+    tank1.setRightThrottle(1);
   }
 
   var state = gameLogic.getState();

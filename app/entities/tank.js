@@ -76,7 +76,7 @@ Tank.prototype = {
   /**
   * @param {Number} amount - Value in [-1, 1]
   */
-  leftThrottle: function(amount) {
+  setLeftThrottle: function(amount) {
     if (amount == 0) {
       this.leftTread.setBrakeForce(noThrottleBrakeForce);
     } else {
@@ -88,7 +88,7 @@ Tank.prototype = {
   /**
   * @param {Number} amount - Value in [-1, 1]
   */
-  rightThrottle: function(amount) {
+  setRightThrottle: function(amount) {
     if (amount == 0) {
       this.rightTread.setBrakeForce(noThrottleBrakeForce);
     } else {
