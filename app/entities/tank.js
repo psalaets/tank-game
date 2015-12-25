@@ -1,10 +1,17 @@
 var p2 = require('@psalaets/p2');
+var vec2 = require('vec2');
 
 module.exports = Tank;
 
 var maxThrottleForce = 45;
 var noThrottleBrakeForce = 90;
 
+<<<<<<< HEAD
+=======
+// degrees per second
+var maxTurretRotationSpeed = 45;
+
+>>>>>>> master
 /**
 * Create a tank.
 *
@@ -19,14 +26,13 @@ function Tank(id, properties) {
   this.id = id;
 
   properties = properties || {};
-  var x = properties.x;
-  var y = properties.y
+  var x = properties.x || 0;
+  var y = properties.y || 0;
   var rotation = properties.rotation || 0;
-  var rotationRadians = degreesToRadians(rotation);
-  x = x || 0;
-  y = y || 0;
+  this.turretRotation = properties.turretRotation || 0;
+  this.turretThrottle = 0;
 
-  this.body = createBody(x, y, width, height, rotationRadians);
+  this.body = createBody(x, y, width, height, degreesToRadians(rotation));
   this.vehicle = createVehicle(this.body);
   this.leftTread = addTread(this.vehicle, -width / 2, 0);
   this.rightTread = addTread(this.vehicle, width / 2, 0);
@@ -74,9 +80,16 @@ function addTread(vehicle, localX, localY) {
 
 Tank.prototype = {
   /**
+  * @param {Number} deltaSeconds - How many seconds have elapsed since last update.
+  */
+  update: function(deltaSeconds) {
+    this.turretRotation += this.turretThrottle * maxTurretRotationSpeed * deltaSeconds;
+    this.turretRotation = normalizeDegrees(this.turretRotation);
+  },
+  /**
   * @param {Number} amount - Value in [-1, 1]
   */
-  leftThrottle: function(amount) {
+  setLeftThrottle: function(amount) {
     if (amount == 0) {
       this.leftTread.setBrakeForce(noThrottleBrakeForce);
     } else {
@@ -88,7 +101,7 @@ Tank.prototype = {
   /**
   * @param {Number} amount - Value in [-1, 1]
   */
-  rightThrottle: function(amount) {
+  setRightThrottle: function(amount) {
     if (amount == 0) {
       this.rightTread.setBrakeForce(noThrottleBrakeForce);
     } else {
@@ -96,6 +109,12 @@ Tank.prototype = {
     }
 
     this.rightTread.engineForce = amount * maxThrottleForce;
+  },
+  /**
+  * @param {Number} amount - Value in [-1, 1]
+  */
+  setTurretThrottle: function(amount) {
+    this.turretThrottle = amount;
   },
   /**
   * Helper to add tank to p2.
@@ -114,13 +133,25 @@ Tank.prototype = {
   removeFromWorld: function(world) {
     world.removeBody(this.body);
     this.vehicle.removeFromWorld(world);
+  },
+  /**
+  * @return {Object} containing raw data properties of this tank
+  */
+  toData: function() {
+    return {
+      id: this.id,
+      x: this.x,
+      y: this.y,
+      rotation: this.rotation,
+      turretRotation: this.turretRotation
+    };
   }
 };
 
 Object.defineProperties(Tank.prototype, {
   rotation: {
     get: function() {
-      var angle = normalizeAngle(this.body.angle);
+      var angle = normalizeRadians(this.body.angle);
       return radiansToDegrees(angle);
     }
   },
@@ -133,13 +164,34 @@ Object.defineProperties(Tank.prototype, {
     get: function() {
       return this.body.position[1];
     }
+  },
+  aimVector: {
+    get: function() {
+      var aimVector = vec2(0, -1);
+
+      // rotate by tank rotation
+      aimVector.rotate(this.body.angle);
+
+      // rotate by turret rotation
+      aimVector.rotate(degreesToRadians(this.turretRotation));
+
+      return aimVector;
+    }
   }
 });
 
-function normalizeAngle(angle){
+function normalizeRadians(angle) {
   angle = angle % (2 * Math.PI);
   if (angle < 0) {
     angle += (2 * Math.PI);
+  }
+  return angle;
+}
+
+function normalizeDegrees(angle) {
+  angle = angle % 360;
+  if (angle < 0) {
+    angle += 360;
   }
   return angle;
 }

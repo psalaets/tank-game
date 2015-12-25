@@ -13,24 +13,30 @@ io.on('connection', function(socket) {
   socket.on('type', function(type) {
     console.log('socket ' + socket.id + ' is ' + type);
 
-    if (type == 'driver') {
+    if (type == 'watcher') {
+      socket.join('watchers');
+    } else {
       var tank = gameLogic.addTank(500, 500);
 
       socket.on('disconnect', function() {
         gameLogic.removeTank(tank.id);
       });
 
-      socket.on('left-throttle', function(obj) {
-        // negate power because phyiscs is y-up but svg is y-down
-        tank.leftThrottle(-obj.power);
-      });
+      if (type == 'driver') {
+        socket.on('left-throttle', function(obj) {
+          // negate power because phyiscs is y-up but svg is y-down
+          tank.setLeftThrottle(-obj.power);
+        });
 
-      socket.on('right-throttle', function(obj) {
-        // negate power because phyiscs is y-up but svg is y-down
-        tank.rightThrottle(-obj.power);
-      });
-    } else if (type == 'watcher') {
-      socket.join('watchers');
+        socket.on('right-throttle', function(obj) {
+          // negate power because phyiscs is y-up but svg is y-down
+          tank.setRightThrottle(-obj.power);
+        });
+      } else if (type == 'gunner') {
+        socket.on('turret-throttle', function(obj) {
+          tank.setTurretThrottle(obj.power);
+        });
+      }
     }
   });
 });

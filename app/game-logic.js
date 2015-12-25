@@ -40,19 +40,13 @@ GameLogic.prototype = {
   // update game
   update(deltaSeconds) {
     this.world.step(1 / 30, deltaSeconds);
+
+    this.tanks.forEach(tank => tank.update(deltaSeconds));
   },
   // state of everything in the game
   getState() {
     var state = {
-      tanks: this.tanks.map(function(tank) {
-        return {
-          id: tank.id,
-          x: tank.x,
-          y: tank.y,
-          rotation: tank.rotation,
-          turretRotation: 0
-        };
-      })
+      tanks: this.tanks.map(tank => tank.toData())
     };
 
     return state;

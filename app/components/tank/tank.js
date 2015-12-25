@@ -10,6 +10,7 @@ var spriteWidth = 248;
 var spriteHeight = 312;
 
 var Tank = React.createClass({
+  displayName: 'Tank',
   propTypes: {
     x: React.PropTypes.number.isRequired,
     y: React.PropTypes.number.isRequired,

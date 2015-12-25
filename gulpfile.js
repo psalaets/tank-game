@@ -21,7 +21,7 @@ var browserSync = require('browser-sync').create();
 // for every page name, foo, in here:
 //   - build uses foo-entry.js to make foo-bundle.js
 //   - foo.html has a <script> that loads foo-bundle.js
-var pages = ['driver', 'watcher', 'zoom'];
+var pages = ['gunner', 'driver', 'watcher', 'zoom'];
 
 gulp.task('build-js', function() {
   var bundles = pages.map(function(page) {
