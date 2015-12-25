@@ -6,12 +6,9 @@ module.exports = Tank;
 var maxThrottleForce = 45;
 var noThrottleBrakeForce = 90;
 
-<<<<<<< HEAD
-=======
 // degrees per second
 var maxTurretRotationSpeed = 45;
 
->>>>>>> master
 /**
 * Create a tank.
 *
