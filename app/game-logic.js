@@ -14,6 +14,12 @@ function GameLogic() {
 }
 
 GameLogic.prototype = {
+  addTankRandomly() {
+    var x = (Math.random() * 700) + 100;
+    var y = (Math.random() * 700) + 100;
+
+    return this.addTank(x, y);
+  },
   // add tank to game
   addTank(x, y) {
     var id = this.nextTankId++;

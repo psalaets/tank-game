@@ -16,7 +16,7 @@ io.on('connection', function(socket) {
     if (type == 'watcher') {
       socket.join('watchers');
     } else {
-      var tank = gameLogic.addTank(500, 500);
+      var tank = gameLogic.addTankRandomly();
 
       socket.on('disconnect', function() {
         gameLogic.removeTank(tank.id);
