@@ -7,6 +7,13 @@ var createGameLoop = require('./app/game-loop');
 var GameLogic = require('./app/game-logic');
 var gameLogic = new GameLogic();
 
+var vec2 = require('vec2');
+
+setInterval(function() {
+  console.log('firing...')
+  gameLogic.shoot(400, 400, vec2(0, -1));
+}, 5000)
+
 io.on('connection', function(socket) {
   console.log('client connected');
 

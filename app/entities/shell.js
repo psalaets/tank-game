@@ -7,7 +7,7 @@ function Shell(id, properties) {
 
   properties = properties || {};
 
-  this.radius = 50;
+  this.radius = 25;
   var x = properties.x || 0;
   var y = properties.y || 0;
 
@@ -36,7 +36,7 @@ Shell.prototype = {
   */
   launch: function(aimVector) {
     // somethings per second?
-    var speed = 300;
+    var speed = 500;
     var velocity = aimVector.multiply(speed, true);
 
     this.body.velocity = [velocity.x, velocity.y];

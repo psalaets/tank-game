@@ -67,7 +67,8 @@ GameLogic.prototype = {
   // state of everything in the game
   getState() {
     var state = {
-      tanks: this.tanks.map(tank => tank.toData())
+      tanks: this.tanks.map(tank => tank.toData()),
+      shells: this.shells.map(shell => shell.toData())
     };
 
     return state;
