@@ -21,6 +21,7 @@ function Tank(id, properties) {
   var height = 300;
 
   this.id = id;
+  this.shoot = properties.shoot;
 
   properties = properties || {};
   var x = properties.x || 0;
@@ -142,6 +143,9 @@ Tank.prototype = {
       rotation: this.rotation,
       turretRotation: this.turretRotation
     };
+  },
+  fireWeapon: function() {
+    this.shoot(this.x, this.y, this.aimVector);
   }
 };
 

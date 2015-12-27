@@ -38,7 +38,13 @@ GameLogic.prototype = {
   // add tank to game
   addTank(x, y) {
     var id = this.nextEntityId++;
-    var tank = new Tank(id, {x, y});
+    var tank = new Tank(id, {
+      x,
+      y,
+      shoot(x, y, aim) {
+        console.log(`shot fired by tank ${id} from (${x}, ${y}) towards ${aim}`);
+      }
+    });
 
     this.tanks.push(tank);
     tank.addToWorld(this.world);
