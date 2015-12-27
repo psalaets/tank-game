@@ -41,9 +41,7 @@ GameLogic.prototype = {
     var tank = new Tank(id, {
       x,
       y,
-      shoot(x, y, aim) {
-        console.log(`shot fired by tank ${id} from (${x}, ${y}) towards ${aim}`);
-      }
+      shoot: this.shoot.bind(this)
     });
 
     this.tanks.push(tank);
