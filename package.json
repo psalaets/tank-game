@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "npm run test:unit && npm run test:func",
     "test:unit": "mocha --compilers js:babel-core/register \"./test/unit/**/*.spec.js\"",
-    "test:func": "karma start --auto-watch --no-single-run || echo 'done'"
+    "test:unit:watch": "mocha --compilers js:babel-core/register --watch \"./test/unit/**/*.spec.js\"",
+    "test:func": "karma start",
+    "test:func:watch": "karma start --auto-watch --no-single-run"
   },
   "repository": {
     "type": "git",
