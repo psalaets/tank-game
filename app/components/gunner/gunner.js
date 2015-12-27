@@ -12,9 +12,9 @@ var Gunner = React.createClass({
     return (
       <div>
         <TouchSurface onCursorChange={this.handleThrottleChange}/>
-        <div data-fire-button onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd}>
+        <button data-fire-button onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd}>
           fire
-        </div>
+        </button>
       </div>
     );
   },
