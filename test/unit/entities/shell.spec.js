@@ -48,7 +48,7 @@ describe('Shell entity', function() {
         id: 1,
         x: 5,
         y: 10,
-        radius: 50
+        radius: 25
       });
     });
   });
