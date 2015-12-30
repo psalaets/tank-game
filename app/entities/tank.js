@@ -1,4 +1,4 @@
-var p2 = require('@psalaets/p2');
+var p2 = require('p2');
 var vec2 = require('vec2');
 
 module.exports = Tank;
