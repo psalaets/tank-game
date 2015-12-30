@@ -22,7 +22,12 @@ function Tank(id, properties) {
 
   this.id = id;
   this.shoot = properties.shoot;
+
   this.firing = false;
+  // how many seconds until weapon can fire
+  this.fireDelay = 0;
+  // shots per second
+  this.rateOfFire = 1;
 
   properties = properties || {};
   var x = properties.x || 0;
@@ -84,6 +89,8 @@ Tank.prototype = {
   update: function(deltaSeconds) {
     this.turretRotation += this.turretThrottle * maxTurretRotationSpeed * deltaSeconds;
     this.turretRotation = normalizeDegrees(this.turretRotation);
+
+    this.fireDelay -= deltaSeconds;
 
     if (this.firing) {
       this.fireWeapon();
@@ -156,7 +163,14 @@ Tank.prototype = {
     this.firing = false;
   },
   fireWeapon: function() {
-    this.shoot(this.x, this.y, this.aimVector, this);
+    if (this.canFireWeapon()) {
+      this.shoot(this.x, this.y, this.aimVector, this);
+
+      this.fireDelay = 1 / this.rateOfFire;
+    }
+  },
+  canFireWeapon: function() {
+    return this.fireDelay <= 0;
   }
 };
 
