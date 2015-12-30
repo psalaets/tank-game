@@ -17,7 +17,7 @@ function GameLogic() {
 }
 
 GameLogic.prototype = {
-  shoot(fromX, fromY, aimVector) {
+  shoot(fromX, fromY, aimVector, tank) {
     var id = this.nextEntityId++;
     var shell = new Shell(id, {
       x: fromX,
@@ -28,6 +28,8 @@ GameLogic.prototype = {
 
     this.world.addBody(shell.body);
     this.shells.push(shell);
+
+    this.world.disableBodyCollision(shell.body, tank.body);
   },
   addTankRandomly() {
     var x = (Math.random() * 700) + 100;

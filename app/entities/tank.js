@@ -22,6 +22,7 @@ function Tank(id, properties) {
 
   this.id = id;
   this.shoot = properties.shoot;
+  this.firing = false;
 
   properties = properties || {};
   var x = properties.x || 0;
@@ -145,7 +146,7 @@ Tank.prototype = {
     };
   },
   fireWeapon: function() {
-    this.shoot(this.x, this.y, this.aimVector);
+    this.shoot(this.x, this.y, this.aimVector, this);
   }
 };
 
