@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "npm run test:unit && npm run test:func",
     "test:unit": "mocha --compilers js:babel-core/register \"./test/unit/**/*.spec.js\"",
-    "test:func": "karma start --auto-watch --no-single-run || echo 'done'"
+    "test:unit:watch": "mocha --compilers js:babel-core/register --watch \"./test/unit/**/*.spec.js\"",
+    "test:func": "karma start",
+    "test:func:watch": "karma start --auto-watch --no-single-run"
   },
   "repository": {
     "type": "git",
@@ -18,9 +21,9 @@
   },
   "homepage": "https://github.com/psalaets/tank-game#readme",
   "dependencies": {
-    "@psalaets/p2": "^0.7.1",
     "express": "^4.13.3",
     "node-gameloop": "^0.1.0",
+    "p2": "^0.7.1",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "socket.io": "^1.3.7",

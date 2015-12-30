@@ -1,4 +1,4 @@
-var p2 = require('@psalaets/p2');
+var p2 = require('p2');
 var vec2 = require('vec2');
 
 module.exports = Tank;
@@ -21,6 +21,13 @@ function Tank(id, properties) {
   var height = 300;
 
   this.id = id;
+  this.shoot = properties.shoot;
+
+  this.firing = false;
+  // how many seconds until weapon can fire
+  this.fireDelay = 0;
+  // shots per second
+  this.rateOfFire = 1;
 
   properties = properties || {};
   var x = properties.x || 0;
@@ -82,6 +89,12 @@ Tank.prototype = {
   update: function(deltaSeconds) {
     this.turretRotation += this.turretThrottle * maxTurretRotationSpeed * deltaSeconds;
     this.turretRotation = normalizeDegrees(this.turretRotation);
+
+    this.fireDelay -= deltaSeconds;
+
+    if (this.firing) {
+      this.fireWeapon();
+    }
   },
   /**
   * @param {Number} amount - Value in [-1, 1]
@@ -142,6 +155,22 @@ Tank.prototype = {
       rotation: this.rotation,
       turretRotation: this.turretRotation
     };
+  },
+  startFiring: function() {
+    this.firing = true;
+  },
+  stopFiring: function() {
+    this.firing = false;
+  },
+  fireWeapon: function() {
+    if (this.canFireWeapon()) {
+      this.shoot(this.x, this.y, this.aimVector, this);
+
+      this.fireDelay = 1 / this.rateOfFire;
+    }
+  },
+  canFireWeapon: function() {
+    return this.fireDelay <= 0;
   }
 };
 

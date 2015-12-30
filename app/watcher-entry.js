@@ -34,8 +34,9 @@ request
 
 function render() {
   var tanks = state.tanks || [];
+  var shells = state.shells || []
 
-  ReactDOM.render(<GameBoard sprites={sprites} tanks={tanks}/>, main);
+  ReactDOM.render(<GameBoard sprites={sprites} tanks={tanks} shells={shells}/>, main);
 
   requestAnimationFrame(render);
 }

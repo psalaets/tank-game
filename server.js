@@ -36,6 +36,14 @@ io.on('connection', function(socket) {
         socket.on('turret-throttle', function(obj) {
           tank.setTurretThrottle(obj.power);
         });
+
+        socket.on('start-firing', function() {
+          tank.startFiring();
+        });
+
+        socket.on('stop-firing', function() {
+          tank.stopFiring();
+        });
       }
     }
   });

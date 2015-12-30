@@ -1,6 +1,8 @@
-var p2 = require('@psalaets/p2');
+var p2 = require('p2');
+require('./monkey-patch-p2')(p2);
 
 var Tank = require('./entities/tank');
+var Shell = require('./entities/shell');
 
 module.exports = GameLogic;
 
@@ -10,10 +12,26 @@ function GameLogic() {
   });
 
   this.tanks = [];
-  this.nextTankId = 0;
+  this.shells = [];
+
+  this.nextEntityId = 0;
 }
 
 GameLogic.prototype = {
+  shoot(fromX, fromY, aimVector, tank) {
+    var id = this.nextEntityId++;
+    var shell = new Shell(id, {
+      x: fromX,
+      y: fromY
+    });
+
+    shell.launch(aimVector);
+
+    this.world.addBody(shell.body);
+    this.shells.push(shell);
+
+    this.world.disableBodyCollision(shell.body, tank.body);
+  },
   addTankRandomly() {
     var x = (Math.random() * 700) + 100;
     var y = (Math.random() * 700) + 100;
@@ -22,8 +40,12 @@ GameLogic.prototype = {
   },
   // add tank to game
   addTank(x, y) {
-    var id = this.nextTankId++;
-    var tank = new Tank(id, {x, y});
+    var id = this.nextEntityId++;
+    var tank = new Tank(id, {
+      x,
+      y,
+      shoot: this.shoot.bind(this)
+    });
 
     this.tanks.push(tank);
     tank.addToWorld(this.world);
@@ -52,7 +74,8 @@ GameLogic.prototype = {
   // state of everything in the game
   getState() {
     var state = {
-      tanks: this.tanks.map(tank => tank.toData())
+      tanks: this.tanks.map(tank => tank.toData()),
+      shells: this.shells.map(shell => shell.toData())
     };
 
     return state;

@@ -14,5 +14,20 @@ function turretThrottle(power) {
   });
 }
 
+function startFiring() {
+  socket.emit('start-firing');
+}
+
+function stopFiring() {
+  socket.emit('stop-firing');
+}
+
 var controls = document.getElementById('controls');
-ReactDOM.render(<Gunner onThrottleChange={turretThrottle}/>, controls);
+
+var props = {
+  onStartFiring: startFiring,
+  onStopFiring: stopFiring,
+  onThrottleChange: turretThrottle
+};
+
+ReactDOM.render(<Gunner {...props}/>, controls);
