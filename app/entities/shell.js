@@ -20,6 +20,9 @@ function createBody(x, y, radius) {
     position: [x, y]
   });
 
+  // sort of like air resistance
+  body.damping = 0;
+
   body.addShape(new p2.Circle({
     radius: radius
   }));
@@ -36,7 +39,7 @@ Shell.prototype = {
   */
   launch: function(aimVector) {
     // somethings per second?
-    var speed = 500;
+    var speed = 600;
     var velocity = aimVector.multiply(speed, true);
 
     this.body.velocity = [velocity.x, velocity.y];
