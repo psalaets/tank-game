@@ -21,9 +21,9 @@
   },
   "homepage": "https://github.com/psalaets/tank-game#readme",
   "dependencies": {
-    "@psalaets/p2": "^0.7.1",
     "express": "^4.13.3",
     "node-gameloop": "^0.1.0",
+    "p2": "^0.7.1",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "socket.io": "^1.3.7",
