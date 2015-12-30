@@ -118,4 +118,73 @@ describe('Tank entity', function() {
       });
     });
   });
+
+  describe('firing weapon', function () {
+    it('invokes shoot property', function () {
+      var shootArgs = [];
+      function shoot(fromX, fromY, aimVector, tank) {
+        shootArgs.push({
+          fromX,
+          fromY,
+          aimVector,
+          tank
+        });
+      }
+
+      var tank = new Tank(1, {
+        shoot
+      });
+
+      tank.startFiring();
+      tank.update(1);
+
+      assert.equal(shootArgs.length, 1);
+      assert.equal(shootArgs[0].fromX, 0);
+      assert.equal(shootArgs[0].fromY, 0);
+      assert.equal(shootArgs[0].aimVector.x, 0);
+      assert.equal(shootArgs[0].aimVector.y, -1);
+      assert.equal(shootArgs[0].tank, tank);
+    });
+
+    it('is limited to one shot per second', function () {
+      var calls = 0;
+      function shoot(fromX, fromY, aimVector, tank) {
+        calls += 1;
+      }
+
+      var tank = new Tank(1, {
+        shoot
+      });
+
+      tank.startFiring();
+      tank.update(1);
+
+      assert.equal(calls, 1);
+
+      tank.update(0.5);
+
+      assert.equal(calls, 1);
+
+      tank.update(0.5);
+
+      assert.equal(calls, 2);
+    });
+
+    it('does not shoot if firing is stopped', function () {
+      var calls = 0;
+      function shoot(fromX, fromY, aimVector, tank) {
+        calls += 1;
+      }
+
+      var tank = new Tank(1, {
+        shoot
+      });
+
+      tank.startFiring();
+      tank.stopFiring();
+      tank.update(1);
+
+      assert.equal(calls, 0);
+    });
+  });
 });
