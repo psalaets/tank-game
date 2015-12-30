@@ -84,6 +84,10 @@ Tank.prototype = {
   update: function(deltaSeconds) {
     this.turretRotation += this.turretThrottle * maxTurretRotationSpeed * deltaSeconds;
     this.turretRotation = normalizeDegrees(this.turretRotation);
+
+    if (this.firing) {
+      this.fireWeapon();
+    }
   },
   /**
   * @param {Number} amount - Value in [-1, 1]
@@ -144,6 +148,12 @@ Tank.prototype = {
       rotation: this.rotation,
       turretRotation: this.turretRotation
     };
+  },
+  startFiring: function() {
+    this.firing = true;
+  },
+  stopFiring: function() {
+    this.firing = false;
   },
   fireWeapon: function() {
     this.shoot(this.x, this.y, this.aimVector, this);

@@ -38,7 +38,11 @@ io.on('connection', function(socket) {
         });
 
         socket.on('start-firing', function() {
-          tank.fireWeapon();
+          tank.startFiring();
+        });
+
+        socket.on('stop-firing', function() {
+          tank.stopFiring();
         });
       }
     }
