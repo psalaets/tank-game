@@ -1,4 +1,5 @@
 var p2 = require('p2');
+require('./monkey-patch-p2')(p2);
 
 var Tank = require('./entities/tank');
 var Shell = require('./entities/shell');
