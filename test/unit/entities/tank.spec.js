@@ -120,71 +120,57 @@ describe('Tank entity', function() {
   });
 
   describe('firing weapon', function () {
-    it('invokes shoot property', function () {
-      var shootArgs = [];
-      function shoot(fromX, fromY, aimVector, tank) {
-        shootArgs.push({
-          fromX,
-          fromY,
-          aimVector,
-          tank
-        });
-      }
+    it('calls weapon\'s fire function', function () {
+      var fireArgs = [];
+      var weapon = {
+        fire: function(fromX, fromY, aimVector, tank) {
+          fireArgs.push({
+            fromX,
+            fromY,
+            aimVector,
+            tank
+          });
+        }
+      };
 
       var tank = new Tank(1, {
-        shoot
+        weapon: weapon
       });
 
       tank.startFiring();
       tank.update(1);
 
-      assert.equal(shootArgs.length, 1);
-      assert.equal(shootArgs[0].fromX, 0);
-      assert.equal(shootArgs[0].fromY, 0);
-      assert.equal(shootArgs[0].aimVector.x, 0);
-      assert.equal(shootArgs[0].aimVector.y, -1);
-      assert.equal(shootArgs[0].tank, tank);
-    });
+      var singleFire = fireArgs[0];
 
-    it('is limited to one shot per second', function () {
-      var calls = 0;
-      function shoot(fromX, fromY, aimVector, tank) {
-        calls += 1;
-      }
-
-      var tank = new Tank(1, {
-        shoot
-      });
-
-      tank.startFiring();
-      tank.update(1);
-
-      assert.equal(calls, 1);
-
-      tank.update(0.5);
-
-      assert.equal(calls, 1);
-
-      tank.update(0.5);
-
-      assert.equal(calls, 2);
+      assert.equal(fireArgs.length, 1);
+      assert.equal(singleFire.fromX, 0);
+      assert.equal(singleFire.fromY, 0);
+      assert.deepEqual(singleFire.aimVector, {x: 0, y: -1});
+      assert.equal(singleFire.tank, tank);
     });
 
     it('does not shoot if firing is stopped', function () {
-      var calls = 0;
-      function shoot(fromX, fromY, aimVector, tank) {
-        calls += 1;
-      }
+      var fireArgs = [];
+      var weapon = {
+        fire: function(fromX, fromY, aimVector, tank) {
+          fireArgs.push({
+            fromX,
+            fromY,
+            aimVector,
+            tank
+          });
+        }
+      };
 
       var tank = new Tank(1, {
-        shoot
+        weapon: weapon
       });
 
       tank.startFiring();
       tank.stopFiring();
       tank.update(1);
 
-      assert.equal(calls, 0);
+      assert.equal(fireArgs.length, 0);
     });
   });
 });

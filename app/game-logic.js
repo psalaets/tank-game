@@ -3,6 +3,7 @@ require('./monkey-patch-p2')(p2);
 
 var Tank = require('./entities/tank');
 var Shell = require('./entities/shell');
+var Weapon = require('./entities/weapon');
 
 module.exports = GameLogic;
 
@@ -40,11 +41,13 @@ GameLogic.prototype = {
   },
   // add tank to game
   addTank(x, y) {
+    var weapon = new Weapon(this.shoot.bind(this));
+
     var id = this.nextEntityId++;
     var tank = new Tank(id, {
       x,
       y,
-      shoot: this.shoot.bind(this)
+      weapon
     });
 
     this.tanks.push(tank);
