@@ -16,6 +16,12 @@ describe('Shell entity', function() {
         assert.equal(shell.x, 0);
         assert.equal(shell.y, 0);
       });
+
+      it('is active', function () {
+        var shell = new Shell(1);
+
+        assert.equal(shell.active, true);
+      });
     });
 
     describe('with properties specified', function () {
@@ -34,6 +40,12 @@ describe('Shell entity', function() {
         assert.equal(shell.x, 5);
         assert.equal(shell.y, 10);
       });
+
+      it('is active', function () {
+        var shell = new Shell(1, {});
+
+        assert.equal(shell.active, true);
+      });
     });
   });
 
@@ -50,6 +62,26 @@ describe('Shell entity', function() {
         y: 10,
         radius: 25
       });
+    });
+  });
+
+  describe('updating', function () {
+    it('becomes inactive after 10 seconds', function () {
+      var shell = new Shell(1);
+
+      assert.equal(shell.active, true);
+
+      shell.update(5);
+
+      assert.equal(shell.active, true);
+
+      shell.update(4);
+
+      assert.equal(shell.active, true);
+
+      shell.update(1);
+
+      assert.equal(shell.active, false);
     });
   });
 });

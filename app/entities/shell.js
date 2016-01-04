@@ -5,6 +5,9 @@ module.exports = Shell;
 function Shell(id, properties) {
   this.id = id;
 
+  this.active = true;
+  this.timeToLive = 10;
+
   properties = properties || {};
 
   this.radius = 25;
@@ -32,7 +35,8 @@ function createBody(x, y, radius) {
 
 Shell.prototype = {
   update: function(deltaSeconds) {
-
+    this.timeToLive -= deltaSeconds;
+    this.active = this.timeToLive > 0;
   },
   /**
   * @param {vec2} aimVector - Normalized aim vector

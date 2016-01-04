@@ -68,11 +68,28 @@ GameLogic.prototype = {
       this.tanks.splice(index, 1);
     }
   },
+  removeShell(id) {
+    var index = this.shells.findIndex(shell => shell.id === id);
+
+    if (index != -1) {
+      var shell = this.shells[index];
+
+      this.world.removeBody(shell.body);
+      this.shells.splice(index, 1);
+    }
+  },
   // update game
   update(deltaSeconds) {
     this.world.step(1 / 30, deltaSeconds);
 
     this.tanks.forEach(tank => tank.update(deltaSeconds));
+    this.shells.forEach(shell => shell.update(deltaSeconds));
+
+    this.shells.slice().forEach(shell => {
+      if (!shell.active) {
+        this.removeShell(shell.id);
+      }
+    });
   },
   // state of everything in the game
   getState() {
