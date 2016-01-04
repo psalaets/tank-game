@@ -119,8 +119,34 @@ describe('Tank entity', function() {
     });
   });
 
-  describe('firing weapon', function () {
-    it('calls weapon\'s fire function', function () {
+  describe('updating', function () {
+    it('updates weapon', function() {
+      var updateArgs = [];
+      var weapon = {
+        fire: function(fromX, fromY, aimVector, tank) {
+          fireArgs.push({
+            fromX,
+            fromY,
+            aimVector,
+            tank
+          });
+        },
+        update: function(deltaSeconds) {
+          updateArgs.push(deltaSeconds);
+        }
+      };
+
+      var tank = new Tank(1, {
+        weapon: weapon
+      });
+
+      tank.update(1);
+      tank.update(5);
+
+      assert.deepEqual(updateArgs, [1, 5]);
+    });
+
+    it('fires weapon if firing', function () {
       var fireArgs = [];
       var weapon = {
         fire: function(fromX, fromY, aimVector, tank) {
@@ -130,7 +156,8 @@ describe('Tank entity', function() {
             aimVector,
             tank
           });
-        }
+        },
+        update: function() {}
       };
 
       var tank = new Tank(1, {
@@ -149,7 +176,7 @@ describe('Tank entity', function() {
       assert.equal(singleFire.tank, tank);
     });
 
-    it('does not shoot if firing is stopped', function () {
+    it('does not fire weapon if firing has stopped', function () {
       var fireArgs = [];
       var weapon = {
         fire: function(fromX, fromY, aimVector, tank) {
@@ -159,7 +186,8 @@ describe('Tank entity', function() {
             aimVector,
             tank
           });
-        }
+        },
+        update: function() {}
       };
 
       var tank = new Tank(1, {
