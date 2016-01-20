@@ -13,6 +13,15 @@ describe('TankMappings', function () {
 
       assert.equal(mappings.findTankOf(gunnerId), tank);
     });
+
+    it('replaces any existing gunner assigned to tank', function () {
+      var mappings = new TankMappings();
+
+      mappings.assignGunner('123', 'tank');
+      mappings.assignGunner('456', 'tank');
+
+      assert.equal(mappings.findTankOf('456'), 'tank');
+    });
   });
 
   describe('assigning driver to a tank', function () {
@@ -25,6 +34,15 @@ describe('TankMappings', function () {
       mappings.assignDriver(driverId, tank);
 
       assert.equal(mappings.findTankOf(driverId), tank);
+    });
+
+    it('replaces any existing driver assigned to tank', function () {
+      var mappings = new TankMappings();
+
+      mappings.assignDriver('123', 'tank');
+      mappings.assignDriver('456', 'tank');
+
+      assert.equal(mappings.findTankOf('456'), 'tank');
     });
   });
 
@@ -117,6 +135,66 @@ describe('TankMappings', function () {
       var mappings = new TankMappings();
 
       assert.equal(mappings.findTankOf('123'), null);
+    });
+  });
+
+  describe('removing a player', function () {
+    it('can remove a driver', function () {
+      var mappings = new TankMappings();
+      mappings.assignDriver('123', 'tank');
+
+      mappings.removePlayer('123');
+
+      assert.equal(mappings.findTankOf('123'), null);
+    });
+
+    it('can remove a gunner', function () {
+      var mappings = new TankMappings();
+      mappings.assignGunner('123', 'tank');
+
+      mappings.removePlayer('123');
+
+      assert.equal(mappings.findTankOf('123'), null);
+    });
+
+    it('does nothing when removing player with no assignments', function () {
+      var mappings = new TankMappings();
+      mappings.assignGunner('123', 'tank');
+
+      mappings.removePlayer('456');
+
+      assert.equal(mappings.findTankOf('456'), null);
+    });
+  });
+
+  describe('finding empty tank', function () {
+    it('returns a tank with no gunner and no driver', function () {
+      var mappings = new TankMappings();
+      mappings.assignGunner('123', 'tank');
+      mappings.removePlayer('123');
+
+
+      assert.equal(mappings.findEmptyTank(), 'tank');
+    });
+
+    it('returns null if no empty tanks', function () {
+      var mappings = new TankMappings();
+      mappings.assignGunner('123', 'tank');
+
+      assert.equal(mappings.findEmptyTank(), null);
+    });
+  });
+
+  describe('unregistering a tank', function () {
+    it('removes driver and gunner mappings to the tank', function () {
+      var mappings = new TankMappings();
+      mappings.assignGunner('123', 'tank');
+      mappings.assignDriver('456', 'tank');
+
+      mappings.unregisterTank('tank');
+
+      assert.equal(mappings.findTankOf('123'), null);
+      assert.equal(mappings.findTankOf('456'), null);
     });
   });
 });

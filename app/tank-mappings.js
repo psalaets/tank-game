@@ -4,15 +4,33 @@ function TankMappings() {
   this.assignments = [];
 }
 
-/*
-removePlayer(player id)
-findEmptyTank - has no driver and no gunner
-unregisterTank(tank id)
-
-canExecute(player id, command)
-*/
-
 TankMappings.prototype = {
+  unregisterTank(tank) {
+    this.assignments = this.assignments.filter(a => a.tank !== tank);
+  },
+  findEmptyTank() {
+    var emptyTankAssignment = this.assignments.find(a => a.gunnerId == null && a.driverId == null);
+
+    if (emptyTankAssignment) {
+      return emptyTankAssignment.tank;
+    } else {
+      return null;
+    }
+  },
+  removePlayer(playerId) {
+    var assignment = this.findAssignment(playerId);
+    if (assignment) {
+      if (assignment.gunnerId === playerId) {
+        delete assignment.gunnerId;
+      }
+      if (assignment.driverId === playerId) {
+        delete assignment.driverId;
+      }
+    }
+  },
+  findAssignment(playerId) {
+    return this.assignments.find(a => a.gunnerId === playerId || a.driverId === playerId)
+  },
   findDriverlessTank() {
     var driverlessAssignment = this.assignments.find(a => a.driverId == null);
     if (driverlessAssignment) {
@@ -57,7 +75,7 @@ TankMappings.prototype = {
     return this.assignments.find(a => a.tank === tank) || null;
   },
   findTankOf(playerId) {
-    var assignment = this.assignments.find(a => a.gunnerId === playerId || a.driverId === playerId);
+    var assignment = this.findAssignment(playerId);
     if (assignment) {
       return assignment.tank;
     } else {
