@@ -3,15 +3,15 @@ var TankMappings = require('../../app/tank-mappings');
 
 describe('TankMappings', function () {
   describe('assigning gunner to a tank', function () {
-    it('pairs gunner id with the given tank', function () {
+    it('pairs gunner id with the given tank id', function () {
       var mappings = new TankMappings();
 
-      var tank = 'tank';
+      var tankId = 'tank';
       var gunnerId = '123';
 
-      mappings.assignGunner(gunnerId, tank);
+      mappings.assignGunner(gunnerId, tankId);
 
-      assert.equal(mappings.findTankOf(gunnerId), tank);
+      assert.equal(mappings.findTankOf(gunnerId), tankId);
     });
 
     it('replaces any existing gunner assigned to tank', function () {
@@ -25,15 +25,15 @@ describe('TankMappings', function () {
   });
 
   describe('assigning driver to a tank', function () {
-    it('pairs driver id with the given tank', function () {
+    it('pairs driver id with the given tank id', function () {
       var mappings = new TankMappings();
 
-      var tank = 'tank';
+      var tankId = 'tank';
       var driverId = '123';
 
-      mappings.assignDriver(driverId, tank);
+      mappings.assignDriver(driverId, tankId);
 
-      assert.equal(mappings.findTankOf(driverId), tank);
+      assert.equal(mappings.findTankOf(driverId), tankId);
     });
 
     it('replaces any existing driver assigned to tank', function () {
@@ -48,7 +48,7 @@ describe('TankMappings', function () {
 
   describe('finding tank with no driver', function () {
     describe('there is a tank that only has a gunner', function () {
-      it('returns the gunner-only tank', function () {
+      it('returns the id of gunner-only tank', function () {
         var mappings = new TankMappings();
 
         var gunnerId = '123';
@@ -79,7 +79,7 @@ describe('TankMappings', function () {
 
   describe('finding tank with no gunner', function () {
     describe('there is a tank that only has a driver', function () {
-      it('returns the driver-only tank', function () {
+      it('returns the id of driver-only tank', function () {
         var mappings = new TankMappings();
 
         var gunnerId = '123';
