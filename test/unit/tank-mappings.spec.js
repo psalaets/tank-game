@@ -167,21 +167,24 @@ describe('TankMappings', function () {
     });
   });
 
-  describe('finding empty tank', function () {
-    it('returns a tank with no gunner and no driver', function () {
+  describe('finding empty tanks', function () {
+    it('returns ids of tanks with no gunner and no driver', function () {
       var mappings = new TankMappings();
-      mappings.assignGunner('123', 'tank');
+      mappings.assignGunner('123', 'tank1');
+      mappings.removePlayer('123');
+
+      mappings.assignDriver('123', 'tank2');
       mappings.removePlayer('123');
 
 
-      assert.equal(mappings.findEmptyTank(), 'tank');
+      assert.deepEqual(mappings.findEmptyTanks(), ['tank1', 'tank2']);
     });
 
-    it('returns null if no empty tanks', function () {
+    it('returns empty arary if no empty tanks', function () {
       var mappings = new TankMappings();
       mappings.assignGunner('123', 'tank');
 
-      assert.equal(mappings.findEmptyTank(), null);
+      assert.deepEqual(mappings.findEmptyTanks(), []);
     });
   });
 

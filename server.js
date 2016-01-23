@@ -46,11 +46,10 @@ function processCommand(command, socket) {
     case 'leave':
       tankMappings.removePlayer(playerId);
 
-      var emptyTankId;
-      while (emptyTankId = tankMappings.findEmptyTank()) {
+      tankMappings.findEmptyTanks().forEach(function(emptyTankId) {
         tankMappings.unregisterTank(emptyTankId);
         gameLogic.removeTank(emptyTankId);
-      }
+      });
 
       break;
     case 'turret-throttle':
