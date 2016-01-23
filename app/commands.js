@@ -1,5 +1,6 @@
 module.exports = {
   join,
+  leave,
   turretThrottle,
   startFiring,
   stopFiring,
@@ -20,6 +21,13 @@ function join(role) {
       role
     }
   };
+}
+
+function leave() {
+  return {
+    type: 'leave',
+    data: {}
+  }
 }
 
 function turretThrottle(power) {

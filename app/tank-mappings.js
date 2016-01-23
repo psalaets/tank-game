@@ -8,6 +8,7 @@ TankMappings.prototype = {
   unregisterTank(tankId) {
     this.assignments = this.assignments.filter(a => a.tankId !== tankId);
   },
+  // TODO return array of empty tank ids
   findEmptyTank() {
     var emptyTankAssignment = this.assignments.find(a => a.gunnerId == null && a.driverId == null);
 

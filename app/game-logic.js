@@ -15,7 +15,7 @@ function GameLogic() {
   this.tanks = [];
   this.shells = [];
 
-  this.nextEntityId = 0;
+  this.nextEntityId = 1;
 }
 
 GameLogic.prototype = {
