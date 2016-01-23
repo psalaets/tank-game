@@ -197,4 +197,50 @@ describe('TankMappings', function () {
       assert.equal(mappings.findTankOf('456'), null);
     });
   });
+
+  describe('player role', function () {
+    describe('checking if player is driver', function () {
+      it('returns true if player is a driver', function () {
+        var mappings = new TankMappings();
+        mappings.assignDriver('123', 'tank');
+
+        assert.equal(mappings.isDriver('123'), true);
+      });
+
+      it('returns false if player is a gunner', function () {
+        var mappings = new TankMappings();
+        mappings.assignGunner('123', 'tank');
+
+        assert.equal(mappings.isDriver('123'), false);
+      });
+
+      it('returns false if player has no role', function () {
+        var mappings = new TankMappings();
+
+        assert.equal(mappings.isDriver('123'), false);
+      });
+    });
+
+    describe('checking if player is gunner', function () {
+      it('returns true if player is a gunner', function () {
+        var mappings = new TankMappings();
+        mappings.assignGunner('123', 'tank');
+
+        assert.equal(mappings.isGunner('123'), true);
+      });
+
+      it('returns false if player is a driver', function () {
+        var mappings = new TankMappings();
+        mappings.assignDriver('123', 'tank');
+
+        assert.equal(mappings.isGunner('123'), false);
+      });
+
+      it('returns false if player has no role', function () {
+        var mappings = new TankMappings();
+
+        assert.equal(mappings.isGunner('123'), false);
+      });
+    });
+  });
 });

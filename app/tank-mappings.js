@@ -81,5 +81,13 @@ TankMappings.prototype = {
     } else {
       return null;
     }
+  },
+  isDriver(playerId) {
+    var assignment = this.findAssignment(playerId);
+    return !!(assignment && assignment.driverId === playerId);
+  },
+  isGunner(playerId) {
+    var assignment = this.findAssignment(playerId);
+    return !!(assignment && assignment.gunnerId === playerId);
   }
 };
