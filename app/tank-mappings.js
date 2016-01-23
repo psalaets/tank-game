@@ -21,10 +21,10 @@ TankMappings.prototype = {
     var assignment = this.findAssignment(playerId);
     if (assignment) {
       if (assignment.gunnerId === playerId) {
-        delete assignment.gunnerId;
+        assignment.gunnerId = null;
       }
       if (assignment.driverId === playerId) {
-        delete assignment.driverId;
+        assignment.driverId = null;
       }
     }
   },
