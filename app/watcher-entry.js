@@ -2,15 +2,15 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var request = require('superagent');
 
-var main = document.getElementById('main');
-
+var join = require('./commands').join;
 var GameBoard = require('./components/game-board/game-board');
 
+var main = document.getElementById('main');
 var state = {};
 
 var socket = io();
 socket.on('connect', function() {
-  socket.emit('type', 'watcher');
+  socket.emit('command', join('watcher'));
 });
 
 socket.on('state-update', function(newState) {

@@ -14,22 +14,18 @@ var maxTurretRotationSpeed = 45;
 *
 * @param {Number} id - game-unique id for the tank
 * @param {Object} properties - object of initial properties for the tank.
-*        allowed properties: x, y, rotation
+*        allowed properties: x, y, rotation, turretRotation, weapon
 */
 function Tank(id, properties) {
   var width = 230;
   var height = 300;
 
   this.id = id;
-  this.shoot = properties.shoot;
-
   this.firing = false;
-  // how many seconds until weapon can fire
-  this.fireDelay = 0;
-  // shots per second
-  this.rateOfFire = 1;
 
   properties = properties || {};
+  this.weapon = properties.weapon;
+
   var x = properties.x || 0;
   var y = properties.y || 0;
   var rotation = properties.rotation || 0;
@@ -90,10 +86,12 @@ Tank.prototype = {
     this.turretRotation += this.turretThrottle * maxTurretRotationSpeed * deltaSeconds;
     this.turretRotation = normalizeDegrees(this.turretRotation);
 
-    this.fireDelay -= deltaSeconds;
+    if (this.weapon) {
+      this.weapon.update(deltaSeconds);
 
-    if (this.firing) {
-      this.fireWeapon();
+      if (this.firing) {
+        this.weapon.fire(this.x, this.y, this.aimVector, this);
+      }
     }
   },
   /**
@@ -161,16 +159,6 @@ Tank.prototype = {
   },
   stopFiring: function() {
     this.firing = false;
-  },
-  fireWeapon: function() {
-    if (this.canFireWeapon()) {
-      this.shoot(this.x, this.y, this.aimVector, this);
-
-      this.fireDelay = 1 / this.rateOfFire;
-    }
-  },
-  canFireWeapon: function() {
-    return this.fireDelay <= 0;
   }
 };
 

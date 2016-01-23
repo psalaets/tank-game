@@ -3,31 +3,31 @@ var ReactDOM = require('react-dom');
 
 var Gunner = require('./components/gunner/gunner');
 
+var {join, turretThrottle, startFiring, stopFiring} = require('./commands');
+
 var socket = io();
 socket.on('connect', function() {
-  socket.emit('type', 'gunner');
+  socket.emit('command', join('gunner'));
 });
 
-function turretThrottle(power) {
-  socket.emit('turret-throttle', {
-    power: power
-  });
+function onThrottleChange(power) {
+  socket.emit('command', turretThrottle(power));
 }
 
-function startFiring() {
-  socket.emit('start-firing');
+function onStartFiring() {
+  socket.emit('command', startFiring());
 }
 
-function stopFiring() {
-  socket.emit('stop-firing');
+function onStopFiring() {
+  socket.emit('command', stopFiring());
 }
 
 var controls = document.getElementById('controls');
 
 var props = {
-  onStartFiring: startFiring,
-  onStopFiring: stopFiring,
-  onThrottleChange: turretThrottle
+  onStartFiring,
+  onStopFiring,
+  onThrottleChange
 };
 
 ReactDOM.render(<Gunner {...props}/>, controls);

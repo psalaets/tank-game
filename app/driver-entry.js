@@ -2,22 +2,20 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var TreadControls = require('./components/tread-control/tread-controls');
 
+var {join, leftThrottle, rightThrottle} = require('./commands');
+
 var socket = io();
 socket.on('connect', function() {
-  socket.emit('type', 'driver');
+  socket.emit('command', join('driver'));
 });
 
-function leftThrottle(power) {
-  socket.emit('left-throttle', {
-    power: power
-  });
+function onLeftThrottle(power) {
+  socket.emit('command', leftThrottle(power));
 }
 
-function rightThrottle(power) {
-  socket.emit('right-throttle', {
-    power: power
-  });
+function onRightThrottle(power) {
+  socket.emit('command', rightThrottle(power));
 }
 
 var controls = document.getElementById('controls');
-ReactDOM.render(<TreadControls onLeftChange={leftThrottle} onRightChange={rightThrottle}/>, controls);
+ReactDOM.render(<TreadControls onLeftChange={onLeftThrottle} onRightChange={onRightThrottle}/>, controls);

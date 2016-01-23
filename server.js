@@ -5,47 +5,102 @@ var io = require('socket.io')(http);
 
 var createGameLoop = require('./app/game-loop');
 var GameLogic = require('./app/game-logic');
+var TankMappings = require('./app/tank-mappings');
+
+var leaveCommand = require('./app/commands').leave;
 var gameLogic = new GameLogic();
+var tankMappings = new TankMappings();
 
-io.on('connection', function(socket) {
-  console.log('client connected');
+function processCommand(command, socket) {
+  var type = command.type;
+  var data = command.data;
+  var playerId = socket.id;
 
-  socket.on('type', function(type) {
-    console.log('socket ' + socket.id + ' is ' + type);
+  console.log('===============');
+  console.log('type:     ' + type);
+  console.log('playerId: ' + playerId);
+  console.log(data);
 
-    if (type == 'watcher') {
-      socket.join('watchers');
-    } else {
-      var tank = gameLogic.addTankRandomly();
+  switch (type) {
+    case 'join':
+      if (data.role == 'watcher') {
+        socket.join('watchers');
+      } else if (data.role == 'gunner') {
+        var tankId = tankMappings.findGunnerlessTank();
+        if (!tankId) {
+          var tank = gameLogic.addTankRandomly();
+          tankId = tank.id;
+        }
 
-      socket.on('disconnect', function() {
-        gameLogic.removeTank(tank.id);
+        tankMappings.assignGunner(playerId, tankId);
+      } else if (data.role == 'driver') {
+        var tankId = tankMappings.findDriverlessTank();
+        if (!tankId) {
+          var tank = gameLogic.addTankRandomly();
+          tankId = tank.id;
+        }
+
+        tankMappings.assignDriver(playerId, tankId);
+      }
+      break;
+    case 'leave':
+      tankMappings.removePlayer(playerId);
+
+      tankMappings.findEmptyTanks().forEach(function(emptyTankId) {
+        tankMappings.unregisterTank(emptyTankId);
+        gameLogic.removeTank(emptyTankId);
       });
 
-      if (type == 'driver') {
-        socket.on('left-throttle', function(obj) {
-          // negate power because phyiscs is y-up but svg is y-down
-          tank.setLeftThrottle(-obj.power);
-        });
-
-        socket.on('right-throttle', function(obj) {
-          // negate power because phyiscs is y-up but svg is y-down
-          tank.setRightThrottle(-obj.power);
-        });
-      } else if (type == 'gunner') {
-        socket.on('turret-throttle', function(obj) {
-          tank.setTurretThrottle(obj.power);
-        });
-
-        socket.on('start-firing', function() {
-          tank.startFiring();
-        });
-
-        socket.on('stop-firing', function() {
-          tank.stopFiring();
-        });
+      break;
+    case 'turret-throttle':
+      if (tankMappings.isGunner(playerId)) {
+        var tank = gameLogic.getTank(tankMappings.findTankOf(playerId));
+        tank.setTurretThrottle(data.power);
       }
-    }
+
+      break;
+    case 'start-firing':
+      if (tankMappings.isGunner(playerId)) {
+        var tank = gameLogic.getTank(tankMappings.findTankOf(playerId));
+        tank.startFiring();
+      }
+
+      break;
+    case 'stop-firing':
+      if (tankMappings.isGunner(playerId)) {
+        var tank = gameLogic.getTank(tankMappings.findTankOf(playerId));
+        tank.stopFiring();
+      }
+
+      break;
+    case 'left-throttle':
+      if (tankMappings.isDriver(playerId)) {
+        var tank = gameLogic.getTank(tankMappings.findTankOf(playerId));
+        // negate power because physics is y-up but svg is y-down
+        tank.setLeftThrottle(-data.power);
+      }
+
+      break;
+    case 'right-throttle':
+      if (tankMappings.isDriver(playerId)) {
+        var tank = gameLogic.getTank(tankMappings.findTankOf(playerId));
+        // negate power because physics is y-up but svg is y-down
+        tank.setRightThrottle(-data.power);
+      }
+
+      break;
+  }
+}
+
+io.on('connection', function(socket) {
+  console.log('socket.io: client connected');
+
+  socket.on('command', function(command) {
+    processCommand(command, socket);
+  });
+
+  socket.on('disconnect', function() {
+    processCommand(leaveCommand(), socket);
   });
 });
 

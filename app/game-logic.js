@@ -3,6 +3,7 @@ require('./monkey-patch-p2')(p2);
 
 var Tank = require('./entities/tank');
 var Shell = require('./entities/shell');
+var Weapon = require('./entities/weapon');
 
 module.exports = GameLogic;
 
@@ -14,7 +15,7 @@ function GameLogic() {
   this.tanks = [];
   this.shells = [];
 
-  this.nextEntityId = 0;
+  this.nextEntityId = 1;
 }
 
 GameLogic.prototype = {
@@ -40,11 +41,13 @@ GameLogic.prototype = {
   },
   // add tank to game
   addTank(x, y) {
+    var weapon = new Weapon(this.shoot.bind(this));
+
     var id = this.nextEntityId++;
     var tank = new Tank(id, {
       x,
       y,
-      shoot: this.shoot.bind(this)
+      weapon
     });
 
     this.tanks.push(tank);
@@ -65,11 +68,28 @@ GameLogic.prototype = {
       this.tanks.splice(index, 1);
     }
   },
+  removeShell(id) {
+    var index = this.shells.findIndex(shell => shell.id === id);
+
+    if (index != -1) {
+      var shell = this.shells[index];
+
+      this.world.removeBody(shell.body);
+      this.shells.splice(index, 1);
+    }
+  },
   // update game
   update(deltaSeconds) {
     this.world.step(1 / 30, deltaSeconds);
 
     this.tanks.forEach(tank => tank.update(deltaSeconds));
+    this.shells.forEach(shell => shell.update(deltaSeconds));
+
+    this.shells.slice().forEach(shell => {
+      if (!shell.active) {
+        this.removeShell(shell.id);
+      }
+    });
   },
   // state of everything in the game
   getState() {
