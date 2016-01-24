@@ -33,10 +33,14 @@ request
   });
 
 function render() {
-  var tanks = state.tanks || [];
-  var shells = state.shells || []
+  var props = {
+    tanks: state.tanks || [],
+    shells: state.shells || [],
+    obstacles: state.obstacles || [],
+    sprites: sprites
+  };
 
-  ReactDOM.render(<GameBoard sprites={sprites} tanks={tanks} shells={shells}/>, main);
+  ReactDOM.render(<GameBoard {...props}/>, main);
 
   requestAnimationFrame(render);
 }

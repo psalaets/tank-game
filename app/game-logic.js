@@ -4,6 +4,7 @@ require('./monkey-patch-p2')(p2);
 var Tank = require('./entities/tank');
 var Shell = require('./entities/shell');
 var Weapon = require('./entities/weapon');
+var Barrel = require('./entities/barrel');
 
 module.exports = GameLogic;
 
@@ -14,6 +15,7 @@ function GameLogic() {
 
   this.tanks = [];
   this.shells = [];
+  this.obstacles = [];
 
   this.nextEntityId = 1;
 }
@@ -32,6 +34,13 @@ GameLogic.prototype = {
     this.shells.push(shell);
 
     this.world.disableBodyCollision(shell.body, tank.body);
+  },
+  addBarrel(x, y, radius) {
+    var id = this.nextEntityId++;
+    var barrel = new Barrel(id, {x, y, radius});
+
+    this.world.addBody(barrel.body);
+    this.obstacles.push(barrel);
   },
   addTankRandomly() {
     var x = (Math.random() * 700) + 100;
@@ -95,7 +104,8 @@ GameLogic.prototype = {
   getState() {
     var state = {
       tanks: this.tanks.map(tank => tank.toData()),
-      shells: this.shells.map(shell => shell.toData())
+      shells: this.shells.map(shell => shell.toData()),
+      obstacles: this.obstacles.map(ob => ob.toData())
     };
 
     return state;

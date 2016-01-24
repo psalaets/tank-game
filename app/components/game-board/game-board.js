@@ -4,6 +4,7 @@ var Svg = require('../svg/svg');
 var SpriteDefs = require('../sprite-defs/sprite-defs');
 var Tank = require('../tank/tank');
 var Shell = require('../shell/shell');
+var Barrel = require('../barrel/barrel');
 
 var spriteMetadata = require('../prop-types/sprite-metadata');
 var tank = require('../prop-types/tank');
@@ -18,10 +19,12 @@ var GameBoard = React.createClass({
       y: React.PropTypes.number,
       radius: React.PropTypes.number
     })),
+    obstacles: React.PropTypes.array
   },
   render() {
     var tanks = this.renderTanks();
     var shells = this.renderShells();
+    var obstacles = this.renderObstacles();
 
     var camera = {
       x: 400,
@@ -34,6 +37,7 @@ var GameBoard = React.createClass({
         <SpriteDefs sprites={this.props.sprites}/>
         {tanks}
         {shells}
+        {obstacles}
       </Svg>
     );
   },
@@ -45,6 +49,11 @@ var GameBoard = React.createClass({
   renderShells() {
     return this.props.shells.map(function(shellProps) {
       return <Shell key={shellProps.id} {...shellProps}/>
+    });
+  },
+  renderObstacles() {
+    return this.props.obstacles.map(function(obstacle) {
+      return <Barrel key={obstacle.id} {...obstacle}/>;
     });
   }
 });
