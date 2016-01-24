@@ -180,7 +180,7 @@ describe('TankMappings', function () {
       assert.deepEqual(mappings.findEmptyTanks(), ['tank1', 'tank2']);
     });
 
-    it('returns empty arary if no empty tanks', function () {
+    it('returns empty array if no empty tanks', function () {
       var mappings = new TankMappings();
       mappings.assignGunner('123', 'tank');
 

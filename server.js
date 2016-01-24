@@ -11,6 +11,12 @@ var leaveCommand = require('./app/commands').leave;
 var gameLogic = new GameLogic();
 var tankMappings = new TankMappings();
 
+gameLogic.addBarrel(-1000, -500, 150);
+gameLogic.addBarrel(-800, 1500, 150);
+gameLogic.addBarrel(200, 500, 400);
+gameLogic.addBarrel(1700, -300, 150);
+gameLogic.addBarrel(2000, 1600, 150);
+
 function processCommand(command, socket) {
   var type = command.type;
   var data = command.data;

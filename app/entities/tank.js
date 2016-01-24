@@ -3,8 +3,8 @@ var vec2 = require('vec2');
 
 module.exports = Tank;
 
-var maxThrottleForce = 45;
-var noThrottleBrakeForce = 90;
+var maxThrottleForce = 75;
+var noThrottleBrakeForce = 150;
 
 // degrees per second
 var maxTurretRotationSpeed = 45;
@@ -74,7 +74,7 @@ function addTread(vehicle, localX, localY) {
     localPosition: [localX, localY]
   });
 
-  tread.setSideFriction(50);
+  tread.setSideFriction(90);
   return tread;
 }
 
